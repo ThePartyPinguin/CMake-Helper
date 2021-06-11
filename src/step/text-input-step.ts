@@ -10,7 +10,8 @@ export interface TextInputFlowConfig extends BaseFlowConfig
 
 export interface TextInputStepConfig extends BaseStepConfig
 {
-	placeHolder: string;
+	placeHolder: string,
+	prompt: string
 }
 
 export abstract class TextInputStep<TConfig extends TextInputFlowConfig> extends BaseStep<TConfig>
@@ -25,4 +26,19 @@ export abstract class TextInputStep<TConfig extends TextInputFlowConfig> extends
 		super(StepDisplayType.TEXT_INPUT, _config, _service);
 		this.inputKey = _inputKey;
 	}
+
+	setInputValue(inputValue: string): void
+	{
+		if(!this.config.textInput)
+		{
+			this.config.textInput = {};
+		}
+
+		this.config.textInput[this.inputKey] = inputValue;
+		this.onInput(inputValue);
+	}
+
+	abstract validateInput(inputValue: string): true | string;
+
+	protected abstract onInput(inputValue: string): void;
 }

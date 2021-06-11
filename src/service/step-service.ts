@@ -1,13 +1,17 @@
 import { BaseFlowConfig } from "../flow/base-flow-config";
 import { BaseStep } from "../step/step-base";
 
-export class StepService<TStepConfig extends BaseFlowConfig>
+export class StepService<TFlowConfig extends BaseFlowConfig>
 {
-	createStep<TStep extends BaseStep<TStepConfig>>(
-		_stepType: (new(_config: TStepConfig, _service: StepService<TStepConfig>) => TStep),
-
-		_config: TStepConfig)
+	createStep<TStep extends BaseStep<TFlowConfig>>(
+		_stepType: (new(_config: TFlowConfig, _service: StepService<TFlowConfig>) => TStep),
+		_next: (_config: TFlowConfig) => BaseStep<TFlowConfig> | void,
+		_canceled: (_config: TFlowConfig) => void,
+		_config: TFlowConfig)
 	{
-		return new _stepType(_config, this);
+		const step = new _stepType(_config, this);
+		step.getNextStep = _next;
+		step.onCanceled = _canceled
+		return step;
 	}
 }

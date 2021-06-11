@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('cmake-helper-v2.test', () => {
 
 		const createProjectConfig: CreateProjectFlowConfig = {
-			flowName:  'Create project'
+			flowName:  'Create project',
 		};
 
 		FlowRunner.executeFlow(createProjectConfig, CreateProjectFlow);
