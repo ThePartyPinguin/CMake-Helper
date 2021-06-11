@@ -8,8 +8,7 @@ export class ProjectService
 
 	loadProjects(): Promise<{[key: string]: Project}>
 	{
-		return new Promise<{[key: string]: Project}>((resolve, reject) => {
-			
+		return new Promise<{[key: string]: Project}>((resolve, reject) => {		
 
 			const workSpaceFolders = vscode.workspace.workspaceFolders;
 
