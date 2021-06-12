@@ -1,27 +1,29 @@
 import * as vscode from 'vscode';
 import { StepService } from "../service/step-service";
-import { BaseStep } from "../step/step-base";
+import { BaseStep } from "../step/base-step";
 import { StepDisplayType } from "../step/step-display-type";
-import { TextInputFlowConfig, TextInputStep, TextInputStepConfig } from "../step/text-input-step";
+import { TextInputStep, TextInputStepConfig } from "../step/input/text-input-step";
 import { BaseFlow } from "./base-flow";
 import { BaseFlowConfig } from "./base-flow-config";
+import { SelectionInputStep, SelectionInputStepConfig, SelectionItem } from '../step/input/selection-input-step';
+import { MultiSelectionInputStep } from '../step/input/multi-selection-input-step';
 
 export class FlowRunner
 {
-	static executeFlow<TConfig extends BaseFlowConfig, TFlow extends BaseFlow<TConfig>>(
-		_config: TConfig,
-		_flowType: (new(_config: TConfig, _service: StepService<TConfig>) => TFlow))
+	static executeFlow<TFlowConfig extends BaseFlowConfig, TFlow extends BaseFlow<TFlowConfig>>(
+		_config: TFlowConfig,
+		_flowType: (new(_config: TFlowConfig, _service: StepService<TFlowConfig>) => TFlow))
 	{
-		const stepService = new StepService<TConfig>();
+		const stepService = new StepService<TFlowConfig>();
 
 		const flow = new _flowType(_config, stepService);
 
 		const firstStep = flow.getFirstStep(_config);
 
-		this._displayStep<TConfig>(firstStep);
+		this._displayStep<TFlowConfig>(firstStep);
 	}
 
-	private static _displayStep<TConfig extends BaseFlowConfig>(_step: BaseStep<TConfig>)
+	private static _displayStep<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig>)
 	{
 		const displayType = _step.stepDisplayType;
 
@@ -29,12 +31,23 @@ export class FlowRunner
 		{
 			case StepDisplayType.TEXT_INPUT:
 			{
-				this._displayTextInputStep(<TextInputStep<any>>_step)
+				this._displayTextInputStep(<TextInputStep<TFlowConfig>>_step);
+				break;
+			}
+			case StepDisplayType.SELECTION:
+			{
+				this._displaySelectionStep(<SelectionInputStep<any, TFlowConfig>>_step);
+				break;
+			}
+			case StepDisplayType.MULTI_SELECTION:
+			{
+				this._displayMultiSelectionStep(<MultiSelectionInputStep<any, TFlowConfig>>_step);
+				break;
 			}
 		}
 	}
 
-	private static _displayTextInputStep<TConfig extends TextInputFlowConfig>(_step: TextInputStep<TConfig>)
+	private static _displayTextInputStep<TFlowConfig extends BaseFlowConfig>(_step: TextInputStep<TFlowConfig>)
 	{
 		const stepConfig = <TextInputStepConfig>_step.getStepConfig();
 
@@ -61,43 +74,141 @@ export class FlowRunner
 
 			if(typeof validationMessage === 'string')
 			{
-				console.log('invalid');
-				console.log(inputValue);
 				inputBox.validationMessage = validationMessage;
 				return;
 			}
 
+			inputBox.validationMessage = undefined;
 			_step.setInputValue(inputValue);
 
-			const getNextStep = _step.getNextStep;
+			this._getNextCallbackAndDisplay(_step);
 
-			if(getNextStep)
-			{
-				const nextStep = getNextStep(_step.config);
-
-				if(nextStep instanceof BaseStep)
-				{
-					this._displayStep(nextStep);
-				}				
-			}
-			inputBox.dispose();		
+			// inputBox.dispose();	
 		});
 
 		inputBox.onDidHide(() => {
-
-			if(!inputAccepted)
-			{
-				const onCanceled = _step.onCanceled;
-
-				if(onCanceled)
-				{
-					onCanceled(_step.config);
-				}
-			}
-
+			this._callOnCanceledIfNotAccepted(_step, inputAccepted);
 			inputBox.dispose();
 		});
 
 		inputBox.show();
+	}
+
+	private static _displaySelectionStep<TFlowConfig extends BaseFlowConfig>(_step: SelectionInputStep<any, TFlowConfig>)
+	{
+		const config = <SelectionInputStepConfig<any>>_step.getStepConfig();
+
+		let selectedQuickPick: vscode.QuickPickItem;
+		let inputAccepted: boolean = false;
+
+		const quickPick = vscode.window.createQuickPick();
+
+		quickPick.title = config.stepTitle;
+		quickPick.placeholder = config.placeHolder;
+		quickPick.ignoreFocusOut = config.ignoreFocusOut;
+
+		quickPick.items = config.items;
+		quickPick.canSelectMany = false;
+
+		quickPick.onDidChangeActive((items: vscode.QuickPickItem[]) => {
+			if(items.length > 0)
+			{
+				selectedQuickPick = items[0];
+				quickPick.value = selectedQuickPick.label;
+			}
+		});
+
+		quickPick.onDidAccept(() => {
+			if(selectedQuickPick)
+			{
+				inputAccepted = true;
+
+				const selectedItem = <SelectionItem<any>>selectedQuickPick;
+
+				_step.setSelectedValue(selectedItem);
+
+				this._getNextCallbackAndDisplay(_step);
+			}
+		});
+
+		quickPick.onDidHide(() => {			
+			this._callOnCanceledIfNotAccepted(_step, inputAccepted);
+			quickPick.dispose();
+		});
+
+		quickPick.show();
+	}
+
+	private static _displayMultiSelectionStep<TFlowConfig extends BaseFlowConfig>(_step: MultiSelectionInputStep<any, TFlowConfig>)
+	{
+		const config = <SelectionInputStepConfig<any>>_step.getStepConfig();
+
+		let inputAccepted: boolean = false;
+
+		const quickPick = vscode.window.createQuickPick();
+
+		quickPick.title = config.stepTitle;
+		quickPick.placeholder = config.placeHolder;
+		quickPick.ignoreFocusOut = config.ignoreFocusOut;
+
+		quickPick.items = config.items;
+		quickPick.canSelectMany = true;
+
+		quickPick.onDidAccept(() => {
+
+			const selection: SelectionItem<any>[] = <SelectionItem<any>[]>quickPick.selectedItems;
+
+			if(selection && selection.length > 0)
+			{
+				inputAccepted = true;
+
+				const validationMessage = _step.validateInput(selection);
+
+				if(typeof validationMessage === 'string')
+				{
+					vscode.window.showErrorMessage(validationMessage);
+					return;
+				}
+
+				_step.setSelectedValue(selection);
+
+				this._getNextCallbackAndDisplay(_step);
+			}
+		});
+
+		quickPick.onDidHide(() => {			
+			this._callOnCanceledIfNotAccepted(_step, inputAccepted);
+			quickPick.dispose();
+		});
+
+		quickPick.show();
+	}
+
+	private static _getNextCallbackAndDisplay<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig>)
+	{
+		const getNextStep = _step.getNextStep;
+
+		if(getNextStep)
+		{
+			const nextStep = getNextStep(_step.config, _step.service);
+
+			if(nextStep instanceof BaseStep)
+			{
+				this._displayStep(nextStep);
+			}				
+		}
+	}
+
+	private static _callOnCanceledIfNotAccepted<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig>, _inputAccepted: boolean)
+	{
+		if(!_inputAccepted)
+		{
+			const onCanceled = _step.onCanceled;
+
+			if(onCanceled)
+			{
+				onCanceled(_step.config);
+			}
+		}
 	}
 }

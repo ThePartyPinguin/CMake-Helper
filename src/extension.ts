@@ -2,8 +2,6 @@ import * as vscode from 'vscode';
 import { CreateProjectFlow } from './flow/create-project/create-project-flow';
 import { CreateProjectFlowConfig } from './flow/create-project/create-project-flow-config';
 import { FlowRunner } from './flow/flow-runner';
-import { PlatformType } from './model/project/platform/platform';
-import { ProjectService } from './service/project-service';
 
 
 
@@ -11,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('cmake-helper-v2.test', () => {
 
 		const createProjectConfig: CreateProjectFlowConfig = {
-			flowName:  'Create project',
+			flowName:  'Create project'
 		};
 
 		FlowRunner.executeFlow(createProjectConfig, CreateProjectFlow);

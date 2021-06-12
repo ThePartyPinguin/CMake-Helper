@@ -1,5 +1,6 @@
 export enum StepDisplayType
 {
 	TEXT_INPUT,
-	SELECTION
+	SELECTION,
+	MULTI_SELECTION
 }

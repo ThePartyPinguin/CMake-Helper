@@ -5,6 +5,7 @@ import { StepDisplayType } from "./step-display-type";
 export interface BaseStepConfig
 {
 	stepTitle: string,
+	placeHolder: string,
 	ignoreFocusOut: boolean
 }
 
@@ -19,7 +20,7 @@ export abstract class BaseStep<TFlowConfig extends BaseFlowConfig>
 		return this._stepDisplayType;
 	}
 
-	getNextStep?: (_config: TFlowConfig) => BaseStep<TFlowConfig> | void;
+	getNextStep?: (_config: TFlowConfig, _stepService: StepService<TFlowConfig>) => BaseStep<TFlowConfig> | void;
 	onCanceled?: (config: TFlowConfig) => void;
 
 	constructor(

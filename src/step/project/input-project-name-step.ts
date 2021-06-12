@@ -1,15 +1,16 @@
+import { BaseFlowConfig } from "../../flow/base-flow-config";
 import { StepService } from "../../service/step-service";
-import {  BaseStepConfig } from "../step-base";
-import { TextInputStep, TextInputFlowConfig, TextInputStepConfig } from "../text-input-step";
+import {  BaseStepConfig } from "../base-step";
+import { TextInputStep, TextInputStepConfig } from "../input/text-input-step";
 
-export interface ProjectNameConfig extends TextInputFlowConfig
+export interface ProjectNameConfig extends BaseFlowConfig
 {
 	projectName?: string;
 }
 
 export class InputProjectNameStep<TConfig extends ProjectNameConfig> extends TextInputStep<TConfig>
 {
-	private static _validRegexString: string = '^[0-9a-z-=]+$';
+	private static _validRegexString: string = '^[0-9a-z-=\.]+$';
 
 	private _validateRegex: RegExp;
 	constructor(
