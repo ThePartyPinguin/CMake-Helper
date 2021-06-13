@@ -1,19 +1,15 @@
-import { StepService } from "../service/step-service";
-import { BaseStep } from "../step/base-step";
+import { StepBluePrint } from "../step/step-blueprint";
 import { BaseFlowConfig } from "./base-flow-config";
 
 export abstract class BaseFlow<TFlowConfig extends BaseFlowConfig>
 {
 	config: TFlowConfig;
-	stepService: StepService<TFlowConfig>;
 
 	constructor(
-		_config: TFlowConfig, 
-		_stepService: StepService<TFlowConfig>)
+		_config: TFlowConfig,)
 	{
 		this.config = _config;
-		this.stepService = _stepService;
 	}
 
-	abstract getFirstStep(_config: TFlowConfig): BaseStep<TFlowConfig>;
+	abstract getFirstStep(_config: TFlowConfig): StepBluePrint<TFlowConfig>;
 }

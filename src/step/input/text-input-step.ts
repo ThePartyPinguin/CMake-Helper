@@ -1,5 +1,4 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-import { StepService } from "../../service/step-service";
 import { BaseStep, BaseStepConfig } from "../base-step";
 import { StepDisplayType } from "../step-display-type";
 
@@ -9,17 +8,13 @@ export interface TextInputStepConfig extends BaseStepConfig
 	prompt: string
 }
 
-export abstract class TextInputStep<TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig>
+export abstract class TextInputStep<TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig, TextInputStepConfig>
 {
-	inputKey: string;
-
 	constructor(
-		_config: TFlowConfig, 
-		_service: StepService<TFlowConfig>,
-		_inputKey: string)
+		_config: TFlowConfig,
+		_stepName: string)
 	{
-		super(StepDisplayType.TEXT_INPUT, _config, _service);
-		this.inputKey = _inputKey;
+		super(StepDisplayType.TEXT_INPUT, _config, _stepName);
 	}
 
 	setInputValue(inputValue: string): void

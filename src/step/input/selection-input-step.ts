@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-import { StepService } from '../../service/step-service';
 import { BaseStep, BaseStepConfig } from "../base-step";
 import { StepDisplayType } from '../step-display-type';
 
@@ -14,13 +13,13 @@ export interface SelectionInputStepConfig<TSelectionItem> extends BaseStepConfig
 	items: SelectionItem<TSelectionItem>[];
 }
 
-export abstract class SelectionInputStep<TItem, TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig>
+export abstract class SelectionInputStep<TItem, TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig, SelectionInputStepConfig<TItem>>
 {
 	constructor(
-		_config: TFlowConfig, 
-		_service: StepService<TFlowConfig>)
+		_config: TFlowConfig,
+		_stepName: string)
 	{
-		super(StepDisplayType.SELECTION, _config, _service);
+		super(StepDisplayType.SELECTION, _config, _stepName);
 	}
 
 	setSelectedValue(selectedItem: SelectionItem<TItem>): void

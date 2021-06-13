@@ -1,47 +1,45 @@
 import * as vscode from 'vscode';
-import { StepService } from "../service/step-service";
-import { BaseStep } from "../step/base-step";
+import { BaseStep, BaseStepConfig } from "../step/base-step";
 import { StepDisplayType } from "../step/step-display-type";
 import { TextInputStep, TextInputStepConfig } from "../step/input/text-input-step";
 import { BaseFlow } from "./base-flow";
 import { BaseFlowConfig } from "./base-flow-config";
 import { SelectionInputStep, SelectionInputStepConfig, SelectionItem } from '../step/input/selection-input-step';
 import { MultiSelectionInputStep } from '../step/input/multi-selection-input-step';
+import { StepBluePrint } from '../step/step-blueprint';
 
 export class FlowRunner
 {
 	static executeFlow<TFlowConfig extends BaseFlowConfig, TFlow extends BaseFlow<TFlowConfig>>(
 		_config: TFlowConfig,
-		_flowType: (new(_config: TFlowConfig, _service: StepService<TFlowConfig>) => TFlow))
+		_flowType: (new(_config: TFlowConfig) => TFlow))
 	{
-		const stepService = new StepService<TFlowConfig>();
-
-		const flow = new _flowType(_config, stepService);
-
-		const firstStep = flow.getFirstStep(_config);
-
-		this._displayStep<TFlowConfig>(firstStep);
+		const flow = new _flowType(_config);
+		const firstStepBlueprint = flow.getFirstStep(_config);
+		this._displayStep<TFlowConfig>(_config, firstStepBlueprint);
 	}
 
-	private static _displayStep<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig>)
+	private static _displayStep<TFlowConfig extends BaseFlowConfig>(_config: TFlowConfig, _stepBluePrint: StepBluePrint<TFlowConfig>)
 	{
-		const displayType = _step.stepDisplayType;
+		const step = new _stepBluePrint.stepType(_config);
+		step.getNextStep = _stepBluePrint.next;
+		step.onCanceled = _stepBluePrint.canceled;
 
-		switch(displayType)
+		switch(step.displayType)
 		{
 			case StepDisplayType.TEXT_INPUT:
 			{
-				this._displayTextInputStep(<TextInputStep<TFlowConfig>>_step);
+				this._displayTextInputStep(<TextInputStep<TFlowConfig>>step);
 				break;
 			}
 			case StepDisplayType.SELECTION:
 			{
-				this._displaySelectionStep(<SelectionInputStep<any, TFlowConfig>>_step);
+				this._displaySelectionStep(<SelectionInputStep<any, TFlowConfig>>step);
 				break;
 			}
 			case StepDisplayType.MULTI_SELECTION:
 			{
-				this._displayMultiSelectionStep(<MultiSelectionInputStep<any, TFlowConfig>>_step);
+				this._displayMultiSelectionStep(<MultiSelectionInputStep<any, TFlowConfig>>step);
 				break;
 			}
 		}
@@ -83,7 +81,7 @@ export class FlowRunner
 
 			this._getNextCallbackAndDisplay(_step);
 
-			// inputBox.dispose();	
+			inputBox.hide();
 		});
 
 		inputBox.onDidHide(() => {
@@ -128,6 +126,7 @@ export class FlowRunner
 				_step.setSelectedValue(selectedItem);
 
 				this._getNextCallbackAndDisplay(_step);
+				quickPick.hide();
 			}
 		});
 
@@ -173,6 +172,8 @@ export class FlowRunner
 				_step.setSelectedValue(selection);
 
 				this._getNextCallbackAndDisplay(_step);
+
+				quickPick.hide();
 			}
 		});
 
@@ -184,22 +185,22 @@ export class FlowRunner
 		quickPick.show();
 	}
 
-	private static _getNextCallbackAndDisplay<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig>)
+	private static _getNextCallbackAndDisplay<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig, BaseStepConfig>)
 	{
 		const getNextStep = _step.getNextStep;
 
 		if(getNextStep)
 		{
-			const nextStep = getNextStep(_step.config, _step.service);
+			const nextStepBlueprint = getNextStep(_step.config);
 
-			if(nextStep instanceof BaseStep)
+			if(nextStepBlueprint)
 			{
-				this._displayStep(nextStep);
+				this._displayStep(_step.config, nextStepBlueprint);
 			}				
 		}
 	}
 
-	private static _callOnCanceledIfNotAccepted<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig>, _inputAccepted: boolean)
+	private static _callOnCanceledIfNotAccepted<TFlowConfig extends BaseFlowConfig>(_step: BaseStep<TFlowConfig, BaseStepConfig>, _inputAccepted: boolean)
 	{
 		if(!_inputAccepted)
 		{

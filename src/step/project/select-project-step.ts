@@ -1,52 +1,47 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-// import { Project } from "../../model/project/project";
-import { BaseStepConfig } from "../base-step";
+import { Project } from "../../model/project/project";
 import { SelectionInputStep, SelectionInputStepConfig, SelectionItem } from "../input/selection-input-step";
+import { StepNames } from "../step-names";
 
-export class SelectProjectStep<TFlowConfig extends BaseFlowConfig> extends SelectionInputStep<{name: string, value: boolean}, TFlowConfig>
+export interface SelectProjectConfig extends BaseFlowConfig
 {
-	validateInput(_selectedItem: SelectionItem<{name: string, value: boolean}>): string | true {
+	existingProjects: {[key: string]: Project}
+	selectedProject?: Project
+}
+
+export class SelectProjectStep<TFlowConfig extends SelectProjectConfig> extends SelectionInputStep<Project, TFlowConfig>
+{
+	constructor(
+		_config: TFlowConfig)
+	{
+		super(_config, StepNames.selectProject);
+	}
+	
+	validateInput(_selectedItem: SelectionItem<Project>): string | true {
 		return true;
 	}
 
-	protected onValueSelected(selectedItem: SelectionItem<{name: string, value: boolean}>): void {
-		console.log('Item selected!');
-		console.log(selectedItem);
+	protected onValueSelected(selectedItem: SelectionItem<Project>): void {
+		this.config.selectedProject = selectedItem.item;
 	}
 
-	public getStepConfig(): BaseStepConfig {
-		return <SelectionInputStepConfig<{name: string, value: boolean}>>{
+	public getStepConfig(): SelectionInputStepConfig<Project> {
+
+		const projectNames = Object.keys(this.config.existingProjects);
+
+		return {
 			stepTitle: this.config.flowName,
 			placeHolder: 'Project',
-			items: [
-				{
-					label: 'test - label',
-					description: 'test - description',
-					detail: 'test - detail',
-					item: {
-						name: 'test',
-						value: true
-					}
-				},
-				{
-					label: 'test 2 - label',
-					description: 'test 2 - description',
-					detail: 'test 2 - detail',
-					item: {
-						name: 'test 2',
-						value: true
-					}
-				},
-				{
-					label: 'test 3 - label',
-					description: 'test 3 - description',
-					detail: 'test 3 - detail',
-					item: {
-						name: 'test 3',
-						value: true
-					}
+			ignoreFocusOut: true,
+			items: projectNames.map(name => {
+				const project = this.config.existingProjects[name];
+
+				return <SelectionItem<Project>>{
+					label: `${name} - ${project.version}`,
+					description: project.relativePath,
+					item: project
 				}
-			]
-		}
+			})
+		}	
 	}
 }

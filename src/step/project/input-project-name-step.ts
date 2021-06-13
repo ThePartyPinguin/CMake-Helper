@@ -1,11 +1,10 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-import { StepService } from "../../service/step-service";
-import {  BaseStepConfig } from "../base-step";
 import { TextInputStep, TextInputStepConfig } from "../input/text-input-step";
+import { StepNames } from "../step-names";
 
 export interface ProjectNameConfig extends BaseFlowConfig
 {
-	projectName?: string;
+	projectName: string;
 }
 
 export class InputProjectNameStep<TConfig extends ProjectNameConfig> extends TextInputStep<TConfig>
@@ -14,18 +13,18 @@ export class InputProjectNameStep<TConfig extends ProjectNameConfig> extends Tex
 
 	private _validateRegex: RegExp;
 	constructor(
-		_config: TConfig, 
-		_service: StepService<TConfig>)
+		_config: TConfig)
 	{
-		super(_config, _service, 'project-name');
+		super(_config, StepNames.inputProjectName);
 		this._validateRegex = new RegExp(InputProjectNameStep._validRegexString, 'i');
 	}
 
-	getStepConfig(): BaseStepConfig {
-		return <TextInputStepConfig>{
+	getStepConfig(): TextInputStepConfig {
+		return {
 			stepTitle: this.config.flowName,
 			placeHolder: 'Enter project name',
-			prompt: 'Please enter a valid project name constisting of only a-z, A-Z, 0-9, -, _'
+			prompt: 'Please enter a valid project name constisting of only a-z, A-Z, 0-9, -, _',
+			ignoreFocusOut: true
 		};
 	}
 

@@ -22,8 +22,8 @@ export class CommandConstants
 		title: 'CMakeHelper: Link project'
 	};
 
-	static cmakeHelperGenerateProjects: CommandInfo = {
-		command: 'cmake-helper.generate',
+	static cmakeHelperGenerateProject: CommandInfo = {
+		command: 'cmake-helper-v2.generate',
 		title: 'CMakeHelper: Generate'
 	};
 }

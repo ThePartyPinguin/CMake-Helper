@@ -1,16 +1,15 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-import { StepService } from '../../service/step-service';
 import { BaseStep } from "../base-step";
 import { StepDisplayType } from '../step-display-type';
-import { SelectionItem } from './selection-input-step';
+import { SelectionInputStepConfig, SelectionItem } from './selection-input-step';
 
-export abstract class MultiSelectionInputStep<TItem, TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig>
+export abstract class MultiSelectionInputStep<TItem, TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig, SelectionInputStepConfig<TItem>>
 {
 	constructor(
-		_config: TFlowConfig, 
-		_service: StepService<TFlowConfig>)
+		_config: TFlowConfig,
+		_stepName: string)
 	{
-		super(StepDisplayType.MULTI_SELECTION, _config, _service);
+		super(StepDisplayType.MULTI_SELECTION, _config, _stepName);
 	}
 
 	setSelectedValue(selectedItems: SelectionItem<TItem>[]): void

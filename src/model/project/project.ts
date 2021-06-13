@@ -8,6 +8,7 @@ import { Visibility } from "./visibility";
 export interface Project
 {
 	name: string;
+	relativePath: string,
 	type: ProjectType;
 	version: string;
 	language: {[key in ProjectLanguage]: string};
@@ -15,7 +16,8 @@ export interface Project
 	includeDirectory: string;
 	preCompiledHeader?: string;
 	configHeader?: ProjectConfigHeaderFiles;
-	libraries?: {[key in Visibility]:  {[key in LibraryType]: Library[]}};
+	libraries?: {[key in Visibility]: {[key in LibraryType]: {[key: string]: Library}}};
 	compileDefinitions?: {[key: string]: string[]};
 	platform: {[key in PlatformType]: Platform};
+	sourceFiles?: string[];
 }
