@@ -14,8 +14,24 @@ export class CMakeGeneratorHelper
 		return `${_varSafeName}_${_variable}`
 	}
 
-	public static formatVisibilityVarString(_varSafeName: string, _visibility: Visibility, _variable: CMakeVariable): string
+	public static formatVisibilityVarString(_varName: string, _visibility: Visibility, _variable: CMakeVariable): string
 	{
-		return `${_varSafeName}_${_visibility}_${_variable}`
+		const visibilityString = this.visibilityToCMakeVisibility(_visibility);
+		const varSafeName = this.formatVarSafeString(_varName);
+		return `${varSafeName}_${visibilityString}_${_variable}`
+	}
+
+	public static visibilityToCMakeVisibility(_visibility: Visibility): string
+	{
+		const visibility = <Visibility>(<string><unknown>_visibility).toUpperCase()
+		switch(visibility)
+		{
+			case Visibility.PUBLIC:
+				return 'PUBLIC';
+			case Visibility.PRIVATE:
+				return 'PRIVATE';
+			case Visibility.INTERFACE:
+				return 'INTERFACE';	
+		}
 	}
 }

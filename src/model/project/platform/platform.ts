@@ -14,5 +14,5 @@ export interface Platform
 {
 	binary: PlatformBinary;
 	compileDefinitions?: {[key in Visibility]: string[]};
-	libraries?: {[key: string]: {[key in LibraryType]: Library[]}};
+	libraries?: {[key in Visibility]: {[key in LibraryType]: {[key: string]: Library}}};
 }
