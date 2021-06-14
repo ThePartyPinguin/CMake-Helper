@@ -6,14 +6,13 @@ import { PropertyGenerator } from "../property/property-generator";
 import { CMakeGeneratorHelper } from './cmake-generator-helper';
 import { CMakeFileHeaderGenerator } from "./property/cmake-file-header-generator";
 import { CMakeGlobalLibraryGenerator } from './property/cmake-global-library-generator';
-import { CMakeIncludeDirectoryVariableGenerator } from './property/cmake-include-dir-variable-generator';
 import { CMakePlatformLibraryGenerator } from './property/cmake-platform-library-generator';
 import { CMakePlatformTargetGenerator } from './property/cmake-platform-target-generator';
 import { CMakeProjectDeclGenerator } from './property/cmake-project-decl-generator';
+import { CMakeProjectIncludeDirGenerator } from './property/cmake-project-include-dir-generator';
 import { CMakeProjectLanguageGenerator } from './property/cmake-project-language-generator';
-import { CMakeSourceDirectoryVariableGenerator } from './property/cmake-source-dir-variable-generator';
-import { CMakeSourceFileVariableGenerator } from './property/cmake-source-file-variable-generator';
 import { CMakeTargetIncludeDirGenerator } from './property/cmake-target-include-dir-generator';
+import { CMakeSourceFilesGenerator } from './property/cmske-source-files-generator';
 
 export class CMakeFileGenerator implements ProjectFileGenerator
 {
@@ -23,10 +22,9 @@ export class CMakeFileGenerator implements ProjectFileGenerator
 		CMakeFileHeaderGenerator,
 		CMakeProjectDeclGenerator,
 		CMakeProjectLanguageGenerator,
-		CMakeIncludeDirectoryVariableGenerator,
-		CMakeSourceDirectoryVariableGenerator,
-		CMakeSourceFileVariableGenerator,
+		CMakeSourceFilesGenerator,
 		CMakePlatformTargetGenerator,
+		CMakeProjectIncludeDirGenerator,
 		CMakeGlobalLibraryGenerator,
 		CMakePlatformLibraryGenerator,
 		CMakeTargetIncludeDirGenerator

@@ -2,9 +2,9 @@ import { CommandInfo } from "./model/command-info";
 
 export class CommandConstants
 {
-	static cmakeHelperInitCommand: CommandInfo = {
-		command: "cmake-helper.init",
-		title: "CMakeHelper: init"
+	static create: CommandInfo = {
+		command: "cmake-helper-v2.create-project",
+		title: "CMakeHelper V2: Create project"
 	};
 	
 	static cmakeHelperAddFileCommand: CommandInfo = {
@@ -22,8 +22,8 @@ export class CommandConstants
 		title: 'CMakeHelper: Link project'
 	};
 
-	static cmakeHelperGenerateProject: CommandInfo = {
+	static generate: CommandInfo = {
 		command: 'cmake-helper-v2.generate',
-		title: 'CMakeHelper: Generate'
+		title: 'CMakeHelper V2: Generate'
 	};
 }

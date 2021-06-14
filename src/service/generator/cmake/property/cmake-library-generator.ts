@@ -54,9 +54,9 @@ export class CMakeLibraryGenerator
 			targetIncludeLibOrPackageString = `${indentation}target_link_libraries("${_project.name}" ${_libraryName})`;
 		}
 
-		const includeVisibilities = <Visibility[]>Object.keys(_library.includeDirectories);
+		const definedVisibilities = <Visibility[]>Object.keys(_library.includeDirectories);
 
-		for (const includeVisibility of includeVisibilities) {
+		for (const includeVisibility of definedVisibilities) {
 			const directories = _library.includeDirectories[includeVisibility];
 
 			const directoryListVarName = CMakeGeneratorHelper.formatVisibilityVarString(_project.name, includeVisibility, CMakeVariable.LIBRARY_INCLUDE_DIR_LIST);

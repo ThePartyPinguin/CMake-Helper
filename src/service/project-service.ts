@@ -5,7 +5,7 @@ import { CMakeFileGenerator } from './generator/cmake/cmake-file-generator';
 
 export class ProjectService
 {
-	static projectFileExtension: string = '.cmh'
+	static projectFileExtension: string = '*.cmh'
 	static searchPattern: string = '**/*.{cmh}';
 	
 	loadProjects(): Promise<{[key: string]: Project}>
@@ -94,7 +94,7 @@ export class ProjectService
 	{
 		// Assotiate the '.cmh' extension with json so it has the correct syntax highlighting
 		let fileAssotiations: any = vscode.workspace.getConfiguration('files').get('associations') || {};
-		fileAssotiations[ProjectService.projectFileExtension] = '.json';
+		fileAssotiations[ProjectService.projectFileExtension] = 'json';
 		vscode.workspace.getConfiguration('files').update('associations', fileAssotiations);
 	}
 }

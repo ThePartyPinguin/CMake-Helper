@@ -13,7 +13,7 @@ export interface Project
 	version: string;
 	language: {[key in ProjectLanguage]: string};
 	sourceDirectory: string;
-	includeDirectory: string;
+	includeDirectories: {[key in Visibility]: string[]};
 	preCompiledHeader?: string;
 	configHeader?: ProjectConfigHeaderFiles;
 	libraries?: {[key in Visibility]: {[key in LibraryType]: {[key: string]: Library}}};

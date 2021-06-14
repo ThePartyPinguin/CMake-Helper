@@ -11,7 +11,7 @@ import { ProjectService } from './service/project-service';
 
 
 export function activate(context: vscode.ExtensionContext) {
-	let testCommand = vscode.commands.registerCommand('cmake-helper-v2.test', () => {
+	let testCommand = vscode.commands.registerCommand(CommandConstants.create.command, () => {
 
 		const createProjectConfig: CreateProjectFlowConfig = {
 			flowName:  'Create project',
@@ -29,14 +29,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(testCommand);
 
-	let generateCommand = vscode.commands.registerCommand(CommandConstants.cmakeHelperGenerateProject.command, () => {
+	let generateCommand = vscode.commands.registerCommand(CommandConstants.generate.command, () => {
 
 		const projectService = new ProjectService();
 
 		projectService.loadProjects().then(projects => {
 
 			const generateProjectConfig: GenerateProjectFlowConfig = {
-				flowName: 'Generat project',
+				flowName: 'Generate project',
 				existingProjects: projects
 			};
 

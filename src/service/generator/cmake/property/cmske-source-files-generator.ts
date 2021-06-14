@@ -3,22 +3,23 @@ import { PropertyGenerator } from "../../property/property-generator";
 import { CMakeGeneratorHelper } from "../cmake-generator-helper";
 import { CMakeVariable } from "../cmake-variable";
 
-export class CMakeSourceFileVariableGenerator extends PropertyGenerator
+export class CMakeSourceFilesGenerator extends PropertyGenerator
 {
 	generate(_project: Project, _fileContent: string[]): void {
-		
-		if(!_project.sourceFiles || _project.sourceFiles.length == 0)
+		if(!_project.sourceFiles || _project.sourceFiles.length <= 0)
 		{
 			return;
 		}
 
 		const sourceVarName = CMakeGeneratorHelper.formatVarString(this._varSafeProjectName, CMakeVariable.PROJECT_SOURCE_FILES);
-		let line = `set(${sourceVarName}`;
+		
+		_fileContent.push('# Source files');
+		_fileContent.push(`Set(${sourceVarName}`);
 
-		for (const filePath of _project.sourceFiles) {
-			line += `\t${filePath}\r\n`;
+		for (const sourceFile of _project.sourceFiles) {
+			_fileContent.push(`\t"${sourceFile}"`);
 		}
 
-		line += ')';
+		_fileContent.push(')');
 	}	
 }

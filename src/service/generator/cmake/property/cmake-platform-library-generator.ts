@@ -2,6 +2,7 @@ import { LibraryType } from "../../../../model/project/library/library";
 import { Platform, PlatformType } from "../../../../model/project/platform/platform";
 import { Project } from "../../../../model/project/project";
 import { Visibility } from "../../../../model/project/visibility";
+import { EnumToString } from "../../../../util/enum-to-string";
 import { PropertyGenerator } from "../../property/property-generator";
 import { CMakeLibraryGenerator } from "./cmake-library-generator";
 
@@ -9,8 +10,6 @@ export class CMakePlatformLibraryGenerator extends PropertyGenerator
 {
 	generate(_project: Project, _fileContent: string[]): void {
 		const definedPlatforms = <PlatformType[]>Object.keys(_project.platform);
-
-		_fileContent.push('# Set Target libraries');
 
 		const libraryGenerator: CMakeLibraryGenerator = new CMakeLibraryGenerator();
 		
@@ -22,6 +21,7 @@ export class CMakePlatformLibraryGenerator extends PropertyGenerator
 				continue;
 			}
 
+			_fileContent.push(`# Set ${EnumToString.convert(platformType)} libraries`);
 			_fileContent.push(`if(${platformType.toUpperCase()})`);
 
 			const libraryVisibilities = <Visibility[]>Object.keys(platform.libraries);

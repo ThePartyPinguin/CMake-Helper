@@ -17,8 +17,8 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "cmake-helper-v2.test",
-				"title": "CMakeHelper V2: test"
+				"command": "cmake-helper-v2.create-project",
+				"title": "CMakeHelper V2: Create project"
 			},
 			{
 				"command": "cmake-helper-v2.generate",
