@@ -61,9 +61,9 @@ export class CMakePlatformTargetGenerator extends PropertyGenerator
 	{
 		switch(_platform)
 		{
-			case PlatformType.WIN32:
+			case PlatformType.win32:
 				return 'WIN32 ';
-			case PlatformType.APPLE:
+			case PlatformType.apple:
 				return 'MACOSX_BUNDLE ';
 			default:
 				return '';

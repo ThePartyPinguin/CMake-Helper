@@ -121,7 +121,13 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 			version: '1.0.0',
 			language: CreateProjectFlow._getLanguagesFromConfig(_config, '17'),
 			sourceDirectory: _config.srcDir,
-			includeDirectory: _config.includeDir,
+			includeDirectories: {
+				public: [
+					_config.includeDir
+				], 
+				private: [],
+				interface: []
+			},
 			platform: CreateProjectFlow._getPlatformsFromConfig(_config),
 		}
 	}

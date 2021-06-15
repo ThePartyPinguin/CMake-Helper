@@ -1,5 +1,7 @@
 export class StepNames
 {
+	static initStep: string = 'init-step';
+	
 	static inputProjectName: string = 'input-project-name';
 	static inputProjectRelativePath: string = 'input-project-relative-path';
 	static inputSourceDir: string = 'input-source-dir';

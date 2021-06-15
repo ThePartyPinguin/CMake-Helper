@@ -22,7 +22,7 @@ export class SelectPlatformStep<TFlowConfig extends PlatformConfig> extends Mult
 		const platforms = selectedItems.map(s => s.item);
 
 		for (const p of platforms) {
-			if(p == PlatformType.UNIVERSAL)
+			if(p == PlatformType.universal)
 			{
 				return 'The platform UNIVERSAL cannot be supported!';
 			}
@@ -41,7 +41,7 @@ export class SelectPlatformStep<TFlowConfig extends PlatformConfig> extends Mult
 			stepTitle: 'Select supported platforms',
 			placeHolder: 'Platform',
 			ignoreFocusOut: true,
-			items: Object.values(PlatformType).filter(p => p !== PlatformType.UNIVERSAL).map(p => this.convertPlatformTypeToSelectionItem(p))
+			items: Object.values(PlatformType).filter(p => p !== PlatformType.universal).map(p => this.convertPlatformTypeToSelectionItem(p))
 		}
 	}
 	
@@ -49,7 +49,7 @@ export class SelectPlatformStep<TFlowConfig extends PlatformConfig> extends Mult
 	{
 		switch(type)
 		{
-			case PlatformType.WIN32:
+			case PlatformType.win32:
 			{	
 				return {
 					label: 'Windows (WIN32)',
@@ -58,7 +58,7 @@ export class SelectPlatformStep<TFlowConfig extends PlatformConfig> extends Mult
 					item: type
 				}
 			}
-			case PlatformType.UNIX:
+			case PlatformType.unix:
 			{	
 				return {
 					label: 'Linux (UNIX)',
@@ -66,7 +66,7 @@ export class SelectPlatformStep<TFlowConfig extends PlatformConfig> extends Mult
 					item: type
 				}
 			}
-			case PlatformType.APPLE:
+			case PlatformType.apple:
 			{	
 				return {
 					label: 'MacOS (APPLE)',
@@ -79,7 +79,7 @@ export class SelectPlatformStep<TFlowConfig extends PlatformConfig> extends Mult
 				return {
 					label: 'NOT SUPPORTED',
 					description: 'THIS SHOULD NOT BE SHOWED',
-					item: PlatformType.UNIVERSAL
+					item: PlatformType.universal
 				}
 		}
 	}

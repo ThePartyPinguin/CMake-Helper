@@ -26,12 +26,12 @@ export class CMakeGeneratorHelper
 		const visibility = <Visibility>(<string><unknown>_visibility).toUpperCase()
 		switch(visibility)
 		{
-			case Visibility.PUBLIC:
-				return 'PUBLIC';
-			case Visibility.PRIVATE:
-				return 'PRIVATE';
-			case Visibility.INTERFACE:
-				return 'INTERFACE';	
+			case Visibility.Public:
+				return 'Public';
+			case Visibility.Private:
+				return 'Private';
+			case Visibility.Interface:
+				return 'Interface';	
 		}
 	}
 }

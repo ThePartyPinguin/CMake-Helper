@@ -4,10 +4,10 @@ import { PlatformBinary } from "./platform-binary";
 
 export enum PlatformType
 {
-	UNIVERSAL = "UNIVERSAL",
-	UNIX = "UNIX",
-	WIN32 = "WIN32",
-	APPLE = "APPLE"
+	universal = "universal",
+	unix = "unix",
+	win32 = "win32",
+	apple = "apple"
 }
 
 export interface Platform
