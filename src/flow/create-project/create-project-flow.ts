@@ -19,8 +19,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 	getFirstStep(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig> {
 		return {
 			stepType: InputProjectNameStep,
-			next: CreateProjectFlow._onProjectNameAccept,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectNameAccept,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		}
 	}
 	
@@ -30,8 +30,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 
 		return {
 			stepType: InputProjectRelativePathStep,
-			next: CreateProjectFlow._onProjectrelativePathAccept,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectrelativePathAccept,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		}
 	}
 
@@ -41,8 +41,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 
 		return {
 			stepType: SelectProjectTypeStep,
-			next: CreateProjectFlow._onProjectTypeSelected,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectTypeSelected,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		}
 	}
 
@@ -52,8 +52,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 
 		return {
 			stepType: SelectProjectLanguageStep,
-			next: CreateProjectFlow._onProjectLanguageSelected,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectLanguageSelected,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		}
 	}
 
@@ -63,8 +63,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 
 		return {
 			stepType: InputSourceDirStep,
-			next: CreateProjectFlow._onProjectSourceDirSet,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectSourceDirSet,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		}
 	}
 
@@ -74,8 +74,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 
 		return {
 			stepType: InputIncludeDirStep,
-			next: CreateProjectFlow._onProjectIncludeDirSet,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectIncludeDirSet,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		};
 	}
 
@@ -85,8 +85,8 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 
 		return {
 			stepType: SelectPlatformStep,
-			next: CreateProjectFlow._onProjectPlatformSet,
-			canceled: CreateProjectFlow._onProjectCreationCanceled
+			accept: CreateProjectFlow._onProjectPlatformSet,
+			cancel: CreateProjectFlow._onProjectCreationCanceled
 		}
 	}
 

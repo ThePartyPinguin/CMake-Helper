@@ -22,8 +22,8 @@ export class FlowRunner
 	private static _displayStep<TFlowConfig extends BaseFlowConfig>(_config: TFlowConfig, _stepBluePrint: StepBluePrint<TFlowConfig>)
 	{
 		const step = new _stepBluePrint.stepType(_config);
-		step.getNextStep = _stepBluePrint.next;
-		step.onCanceled = _stepBluePrint.canceled;
+		step.getNextStep = _stepBluePrint.accept;
+		step.onCanceled = _stepBluePrint.cancel;
 
 		switch(step.displayType)
 		{

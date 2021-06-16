@@ -2,15 +2,19 @@ import * as vscode from 'vscode';
 import { InitStep } from "../../step/init/init-helper-step";
 import { StepBluePrint } from "../../step/step-blueprint";
 import { BaseFlow } from "../base-flow";
+import { CreateProjectFlow } from '../create-project/create-project-flow';
+import { FlowConfigTemplate } from '../flow-config-template';
+import { FlowRunner } from '../flow-runner';
 import { InitFlowConfig } from "./init-helper-flow-config";
 
 export class InitFlow extends BaseFlow<InitFlowConfig>
 {
 	getFirstStep(_config: InitFlowConfig): StepBluePrint<InitFlowConfig> {
+
 		return {
 			stepType: InitStep,
-			next: InitFlow._onInitAccept,
-			canceled: InitFlow._onInitCanceled
+			accept: InitFlow._onInitAccept,
+			cancel: InitFlow._onInitCanceled
 		}
 	}
 
@@ -23,6 +27,8 @@ export class InitFlow extends BaseFlow<InitFlowConfig>
 		else
 		{
 			vscode.window.showInformationMessage('Creating single project');
+			const createProjectConfig = FlowConfigTemplate.getDefaultCreateProjectFlowConfig();
+			FlowRunner.executeFlow(createProjectConfig, CreateProjectFlow);
 		}
 		return undefined;
 	}

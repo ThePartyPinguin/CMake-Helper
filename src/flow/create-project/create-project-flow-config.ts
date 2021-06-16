@@ -1,3 +1,4 @@
+import { InitConfig } from "../../step/init/init-helper-step";
 import { IncludeDirConfig } from "../../step/project/input-include-dir-step";
 import { ProjectNameConfig } from "../../step/project/input-project-name-step";
 import { ProjectRelativePathConfig } from "../../step/project/input-project-relative-path-step";
@@ -8,7 +9,7 @@ import { ProjectTypeConfig } from "../../step/project/select-project-type-step";
 import { BaseFlowConfig } from "../base-flow-config";
 
 export interface CreateProjectFlowConfig extends 
-	BaseFlowConfig, 
+	BaseFlowConfig,
 	ProjectNameConfig,
 	ProjectRelativePathConfig,
 	ProjectTypeConfig,

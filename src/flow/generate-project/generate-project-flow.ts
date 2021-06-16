@@ -10,8 +10,8 @@ export class GenerateProjectFlow extends BaseFlow<GenerateProjectFlowConfig>
 	getFirstStep(_config: GenerateProjectFlowConfig): StepBluePrint<GenerateProjectFlowConfig> {
 		return {
 			stepType: SelectProjectStep,
-			next: GenerateProjectFlow._onProjectSelected,
-			canceled: GenerateProjectFlow._onProjectGenerationCanceled
+			accept: GenerateProjectFlow._onProjectSelected,
+			cancel: GenerateProjectFlow._onProjectGenerationCanceled
 		}
 	}
 
