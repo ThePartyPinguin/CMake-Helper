@@ -1,5 +1,7 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-import { TextInputStep, TextInputStepConfig } from "../input/text-input-step";
+import { RegexConstants } from "../../util/regex-constants";
+import { RegexValidatedTextInputStep } from "../input/regex-validated-text-input-step";
+import { TextInputStepConfig } from "../input/text-input-step";
 import { StepNames } from "../step-names";
 
 export interface ProjectRelativePathConfig extends BaseFlowConfig
@@ -7,34 +9,22 @@ export interface ProjectRelativePathConfig extends BaseFlowConfig
 	relativePath: string;
 }
 
-export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePathConfig> extends TextInputStep<TFlowConfig>
+export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePathConfig> extends RegexValidatedTextInputStep<TFlowConfig>
 {
-	private static directoryRegexMatchString : string = '^(?!\/)[\\w/-_\.]+(?<!\/)$';
-
 	private _directoryRegex: RegExp;
 
 	constructor(
 		_config: TFlowConfig)
 	{
-		super(_config, StepNames.inputProjectRelativePath);
-		this._directoryRegex = new RegExp(InputProjectRelativePathStep.directoryRegexMatchString, 'gi');
+		super(_config, StepNames.inputProjectRelativePath, {
+			regexString: RegexConstants.relativeDirectoryRegex,
+			regexFlags: 'gi',
+			validationMessage: `Invalid input! Path should be conform regex: '${RegexConstants.relativeDirectoryRegex}'`,
+			allowEmpty: true
+		});
+		this._directoryRegex = new RegExp(RegexConstants.relativeDirectoryRegex, 'gi');
 	}
 
-	validateInput(inputValue: string): string | true {
-		if(!inputValue || inputValue == '')
-		{
-			return true;
-		}
-
-		const valid = this._directoryRegex.test(inputValue);
-
-		if(valid)
-		{
-			return true;
-		}
-
-		return `Invalid input! Path should be conform regex: '${InputProjectRelativePathStep.directoryRegexMatchString}'`
-	}
 	protected onInput(inputValue: string): void {
 		if(!inputValue || inputValue == '')
 		{
@@ -44,6 +34,7 @@ export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePat
 
 		this.config.relativePath = inputValue;
 	}
+	
 	public getStepConfig(): TextInputStepConfig {
 		return {
 			stepTitle: 'Enter relative path',

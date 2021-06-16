@@ -1,5 +1,7 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
-import { TextInputStep, TextInputStepConfig } from "../input/text-input-step";
+import { RegexConstants } from "../../util/regex-constants";
+import { RegexValidatedTextInputStep } from "../input/regex-validated-text-input-step";
+import { TextInputStepConfig } from "../input/text-input-step";
 import { StepNames } from "../step-names";
 
 export interface IncludeDirConfig extends BaseFlowConfig
@@ -7,34 +9,18 @@ export interface IncludeDirConfig extends BaseFlowConfig
 	includeDir: string;
 }
 
-export class InputIncludeDirStep<TFlowConfig extends IncludeDirConfig> extends TextInputStep<TFlowConfig>
+export class InputIncludeDirStep<TFlowConfig extends IncludeDirConfig> extends RegexValidatedTextInputStep<TFlowConfig>
 {
-	private static directoryRegexMatchString : string = '^(?!\/)[\\w-/]+(?<!\/)$';
-
-	private _directoryRegex: RegExp;
-
-	constructor(
-		_config: TFlowConfig)
+	constructor(_config: TFlowConfig)
 	{
-		super(_config, StepNames.inputIncludeDir);
-		this._directoryRegex = new RegExp(InputIncludeDirStep.directoryRegexMatchString, 'gi');
+		super(_config, StepNames.inputIncludeDir, {
+			regexString: RegexConstants.relativeDirectoryRegex,
+			regexFlags: 'gi',
+			validationMessage: `Invalid input! Path should be conform regex: '${RegexConstants.relativeDirectoryRegex}'`,
+			allowEmpty: true
+		});
 	}
-	
-	validateInput(inputValue: string): string | true {
-		if(!inputValue || inputValue == '')
-		{
-			return true;
-		}
 
-		const isValid = this._directoryRegex.test(inputValue);
-
-		if(isValid)
-		{
-			return true;
-		}
-
-		return `Invalid input! Path should be conform regex: '${InputIncludeDirStep.directoryRegexMatchString}'`;
-	}
 	protected onInput(inputValue: string): void {
 		if(!inputValue || inputValue == '')
 		{
@@ -44,6 +30,7 @@ export class InputIncludeDirStep<TFlowConfig extends IncludeDirConfig> extends T
 
 		this.config.includeDir = inputValue;
 	}
+
 	public getStepConfig(): TextInputStepConfig {
 		return {
 			stepTitle: 'Include directory',

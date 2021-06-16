@@ -12,11 +12,15 @@ import { Project } from '../../model/project/project';
 import { ProjectLanguage } from '../../model/project/project-language';
 import { Platform, PlatformType } from '../../model/project/platform/platform';
 import { InputProjectRelativePathStep } from '../../step/project/input-project-relative-path-step';
-import { ProjectService } from '../../service/project-service';
 
-export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
+export abstract class CreateProjectFlow<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>> extends BaseFlow<TFlowConfig>
 {
-	getFirstStep(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig> {
+	protected static continueProjectCreateFlow<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(
+		_config: TFlowConfig,
+		_onCreationComplete: (_config: TFlowConfig, _project: Project) => void): StepBluePrint<TFlowConfig> {
+
+		_config.onCreationComplete = _onCreationComplete;
+
 		return {
 			stepType: InputProjectNameStep,
 			accept: CreateProjectFlow._onProjectNameAccept,
@@ -24,7 +28,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		}
 	}
 	
-	private static _onProjectNameAccept(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig>
+	private static _onProjectNameAccept<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig>
 	{
 		vscode.window.showInformationMessage(`Project name set: ${_config.projectName}`);
 
@@ -35,7 +39,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		}
 	}
 
-	private static _onProjectrelativePathAccept(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig>
+	private static _onProjectrelativePathAccept<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig>
 	{
 		vscode.window.showInformationMessage(`Project name set: ${_config.projectName}`);
 
@@ -46,7 +50,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		}
 	}
 
-	private static _onProjectTypeSelected(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig>
+	private static _onProjectTypeSelected<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig>
 	{
 		vscode.window.showInformationMessage(`Project type set: ${_config.type}`);
 
@@ -57,7 +61,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		}
 	}
 
-	private static _onProjectLanguageSelected(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig>
+	private static _onProjectLanguageSelected<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig>
 	{
 		vscode.window.showInformationMessage(`Project language set: ${JSON.stringify(_config.languages)}`);
 
@@ -68,7 +72,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		}
 	}
 
-	private static _onProjectSourceDirSet(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig>
+	private static _onProjectSourceDirSet<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig>
 	{
 		vscode.window.showInformationMessage(`Project source dir set: ${_config.srcDir}`);
 
@@ -79,7 +83,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		};
 	}
 
-	private static _onProjectIncludeDirSet(_config: CreateProjectFlowConfig): StepBluePrint<CreateProjectFlowConfig>
+	private static _onProjectIncludeDirSet<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig>
 	{
 		vscode.window.showInformationMessage(`Project include dir set: ${_config.includeDir}`);
 
@@ -90,7 +94,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		}
 	}
 
-	private static _onProjectPlatformSet(_config: CreateProjectFlowConfig): undefined
+	private static _onProjectPlatformSet<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): undefined
 	{
 		vscode.window.showInformationMessage(`Project supported plaforms set: ${JSON.stringify(_config.platforms)}`);
 		vscode.window.showInformationMessage(`Project configuration complete! Generating cmake files`);
@@ -99,20 +103,25 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		return undefined;
 	}
 
-	private static _onProjectCreationCanceled(_config: CreateProjectFlowConfig)
+	private static _onProjectCreationCanceled<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig)
 	{
 		vscode.window.showErrorMessage('Project creation canceled');
 	}
 
-	private static _onProjectCreationFinish(_config: CreateProjectFlowConfig)
+	private static _onProjectCreationFinish<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig)
 	{
 		const project = CreateProjectFlow._convertFlowConfigToProject(_config);
 
-		const projectService = new ProjectService();
-		projectService.saveProject(project);
+		if(!_config.onCreationComplete)
+		{
+			vscode.window.showErrorMessage('Could not complete project creation, no onCreationComplete callback was defined!');
+			return;
+		}
+
+		_config.onCreationComplete(_config, project);
 	}
 
-	private static _convertFlowConfigToProject(_config: CreateProjectFlowConfig): Project
+	private static _convertFlowConfigToProject<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): Project
 	{
 		return {
 			name: _config.projectName,
@@ -143,7 +152,7 @@ export class CreateProjectFlow extends BaseFlow<CreateProjectFlowConfig>
 		return result;
 	}
 
-	private static _getPlatformsFromConfig(_config: CreateProjectFlowConfig): {[key in PlatformType]: Platform}
+	private static _getPlatformsFromConfig<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): {[key in PlatformType]: Platform}
 	{
 		let result = Object.create(null);
 

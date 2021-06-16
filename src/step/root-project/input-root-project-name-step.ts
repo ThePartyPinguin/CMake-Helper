@@ -4,33 +4,32 @@ import { RegexValidatedTextInputStep } from "../input/regex-validated-text-input
 import { TextInputStepConfig } from "../input/text-input-step";
 import { StepNames } from "../step-names";
 
-export interface ProjectNameConfig extends BaseFlowConfig
+export interface RootProjectNameConfig extends BaseFlowConfig
 {
-	projectName: string;
+	rootProjectName: string;
 }
 
-export class InputProjectNameStep<TFlowConfig extends ProjectNameConfig> extends RegexValidatedTextInputStep<TFlowConfig>
+export class InputRootProjectNameStep<TConfig extends RootProjectNameConfig> extends RegexValidatedTextInputStep<TConfig>
 {
-	constructor(
-		_config: TFlowConfig)
+	constructor(_config: TConfig)
 	{
-		super(_config, StepNames.inputProjectName, {
+		super(_config, StepNames.inputRootProjectName, {
 			regexString: RegexConstants.projectNameRegex,
 			regexFlags: 'i',
-			validationMessage: `Please input a project name conform the regex /${RegexConstants.projectNameRegex}/'`,
+			validationMessage: `Please input a project name conform the regex ${RegexConstants.projectNameRegex}'`,
 			allowEmpty: false
 		});
 	}
 
 	protected onInput(inputValue: string): void {
-		this.config.projectName = inputValue;
+		this.config.rootProjectName = inputValue;
 	}
 
 	public getStepConfig(): TextInputStepConfig {
 		return {
 			stepTitle: this.config.flowName,
-			placeHolder: 'Enter project name',
-			prompt: 'Please enter a valid project name consisting of only a-z, A-Z, 0-9, -, _',
+			placeHolder: 'Enter root project name',
+			prompt: 'Please enter a valid root project name consisting of only a-z, A-Z, 0-9, -, _',
 			ignoreFocusOut: true
 		};
 	}

@@ -1,43 +1,42 @@
 import { BaseFlowConfig } from "../../flow/base-flow-config";
 import { RegexConstants } from "../../util/regex-constants";
 import { RegexValidatedTextInputStep } from "../input/regex-validated-text-input-step";
-import { TextInputStep, TextInputStepConfig } from "../input/text-input-step";
+import { TextInputStepConfig } from "../input/text-input-step";
 import { StepNames } from "../step-names";
 
-export interface SourceDirConfig extends BaseFlowConfig
+export interface RootProjectBinaryDir extends BaseFlowConfig
 {
-	srcDir: string;
+	rootBinaryDirectory: string
 }
 
-export class InputSourceDirStep<TFlowConfig extends SourceDirConfig> extends RegexValidatedTextInputStep<TFlowConfig>
+export class InputRootProjectBinaryDirStep<TFlowConfig extends RootProjectBinaryDir> extends RegexValidatedTextInputStep<TFlowConfig>
 {
 	constructor(_config: TFlowConfig)
 	{
-		super(_config, StepNames.inputSourceDir, {
+		super(_config, StepNames.inputRootProjectBinaryDir, {
 			regexString: RegexConstants.relativeDirectoryRegex,
 			regexFlags: 'gi',
 			validationMessage: `Invalid input! Path should be conform regex: '${RegexConstants.relativeDirectoryRegex}'`,
 			allowEmpty: true
-		});
+		})
 	}
-
+	
 	protected onInput(inputValue: string): void {
-
 		if(!inputValue || inputValue == '')
 		{
-			this.config.srcDir = 'src';
+			this.config.rootBinaryDirectory = 'bin';
 			return;
 		}
 
-		this.config.srcDir = inputValue;
+		this.config.rootBinaryDirectory = inputValue;
 	}
 
 	public getStepConfig(): TextInputStepConfig {
 		return {
-			stepTitle: 'Source dir',
-			placeHolder: 'Enter directory',
-			prompt: 'Set the directory of the project\'s source files. Keep empty to keep default directory (src)',
+			stepTitle: 'Enter relative path',
+			prompt: 'Enter the relative path where the project should be saved. Empty for default (bin)',
+			placeHolder: 'Path (empty for workspace root)',
 			ignoreFocusOut: true
 		}
-	}	
+	}
 }

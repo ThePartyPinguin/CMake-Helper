@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { CreateProjectFlow } from './flow/create-project/create-project-flow';
+import { CreateSingleProjectFlow } from './flow/create-single-project/single-create-project-flow';
 import { FlowConfigTemplate } from './flow/flow-config-template';
 import { GenerateProjectFlow } from './flow/generate-project/generate-project-flow';
 import { InitFlow } from './flow/init/init-helper-flow';
@@ -19,7 +19,7 @@ export function activate(_context: vscode.ExtensionContext) {
 	flowService.registerFlow(
 		'cmake-helper-v2.create-project',
 		FlowConfigTemplate.getDefaultCreateProjectFlowConfig,
-		CreateProjectFlow
+		CreateSingleProjectFlow
 	);
 
 	flowService.registerFlow(
