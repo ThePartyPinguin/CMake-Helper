@@ -2,7 +2,7 @@ import { Project } from "../../../../model/project/project";
 import { ProjectLanguage } from "../../../../model/project/project-language";
 import { PropertyGenerator } from "../../property/property-generator";
 
-export class CMakeProjectLanguageGenerator extends PropertyGenerator
+export class CMakeProjectLanguageGenerator extends PropertyGenerator<Project>
 {
 	generate(_project: Project, _fileContent: string[]): void {
 		const languages = <ProjectLanguage[]>Object.keys(_project.language);

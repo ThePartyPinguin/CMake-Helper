@@ -1,14 +1,11 @@
-import { Project } from "../../../model/project/project";
-
-export abstract class PropertyGenerator
+export abstract class PropertyGenerator<TValue>
 {
-	protected _varSafeProjectName: string;
+	protected _varSafeUid: string;
 	
-	constructor(
-		_varSafeProjectName: string)
+	constructor(_varSafeProjectName: string)
 	{
-		this._varSafeProjectName = _varSafeProjectName;
+		this._varSafeUid = _varSafeProjectName;
 	}
 
-	abstract generate(_project: Project, _fileContent: string[]): void;
+	abstract generate(_value: TValue, _fileContent: string[]): void;
 }

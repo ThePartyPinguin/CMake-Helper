@@ -6,7 +6,7 @@ import { EnumToString } from "../../../../util/enum-to-string";
 import { PropertyGenerator } from "../../property/property-generator";
 import { CMakeLibraryGenerator } from "./cmake-library-generator";
 
-export class CMakePlatformLibraryGenerator extends PropertyGenerator
+export class CMakePlatformLibraryGenerator extends PropertyGenerator<Project>
 {
 	generate(_project: Project, _fileContent: string[]): void {
 		const definedPlatforms = <PlatformType[]>Object.keys(_project.platform);

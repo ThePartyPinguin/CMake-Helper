@@ -4,7 +4,7 @@ import { Visibility } from "../../../../model/project/visibility";
 import { PropertyGenerator } from "../../property/property-generator";
 import { CMakeLibraryGenerator } from "./cmake-library-generator";
 
-export class CMakeGlobalLibraryGenerator extends PropertyGenerator
+export class CMakeGlobalLibraryGenerator extends PropertyGenerator<Project>
 {
 	generate(_project: Project, _fileContent: string[]): void {
 		

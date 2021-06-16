@@ -1,7 +1,11 @@
 import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { Project } from '../model/project/project';
-import { CMakeFileGenerator } from './generator/cmake/cmake-file-generator';
+import { RootProject } from '../model/root-project/root-project';
+import { CMakeGeneratorHelper } from './generator/cmake/cmake-generator-helper';
+import { ProjectCMakeFileGenerator } from './generator/cmake/project-cmake-file-generator';
+import { RootProjectCMakeFileGenerator } from './generator/cmake/root-project-cmake-file-generator';
+import { GeneratedFileInfo } from './generator/generated-file-info';
 
 export class ProjectService
 {
@@ -40,6 +44,30 @@ export class ProjectService
 
 	saveProject(_project: Project)
 	{
+		const generator = new ProjectCMakeFileGenerator();
+		const cmakeContents: GeneratedFileInfo = {
+			fileLines: generator.generateFileLines(_project, CMakeGeneratorHelper.formatVarSafeString(_project.name)),
+			fileName: 'CMakeLists.txt',
+			relativeUri: vscode.Uri.parse('')
+		};
+
+		this.save(_project.name, cmakeContents, _project);	
+	}
+
+	saveRootProject(_project: RootProject)
+	{
+		const generator = new RootProjectCMakeFileGenerator();
+		const cmakeContents: GeneratedFileInfo = {
+			fileLines: generator.generateFileLines(_project, CMakeGeneratorHelper.formatVarSafeString(_project.projectName)),
+			fileName: 'CMakeLists.txt',
+			relativeUri: vscode.Uri.parse('')
+		};
+
+		this.save(_project.projectName, cmakeContents, _project);
+	}
+
+	private save(_name: string, _fileContents: GeneratedFileInfo, _project: Project | RootProject): void
+	{
 		const workSpaceFolders = vscode.workspace.workspaceFolders;
 
 		if(!workSpaceFolders)
@@ -50,35 +78,40 @@ export class ProjectService
 
 		const rootUri = workSpaceFolders[0].uri;
 
-		const generator = new CMakeFileGenerator();
-		const cmakeContents = generator.generateFileContents(_project);
-
-		let fileContents: string = '';
-
-		for (const line of cmakeContents.fileLines) {
-			fileContents += `${line}\r\n`;
-		}
-
-		const projectDir = vscode.Uri.joinPath(rootUri, cmakeContents.relativeUri.fsPath);
+		const projectDir = vscode.Uri.joinPath(rootUri, _fileContents.relativeUri.fsPath);
 
 		this.associateFileExtensionWithJson();
 
 		vscode.workspace.fs.createDirectory(projectDir).then(() => {
+			this.saveCMakeFile(_name, _fileContents, projectDir);
+			this.saveCmhFile(_name, _project, projectDir);
+		});
+	}
 
-			const fileUri: vscode.Uri = vscode.Uri.joinPath(projectDir, cmakeContents.fileName);
+	private saveCMakeFile(_name: string, _fileContents: GeneratedFileInfo, _directoryUri: vscode.Uri)
+	{
+		const fileUri: vscode.Uri = vscode.Uri.joinPath(_directoryUri, _fileContents.fileName);
 
-			vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(fileContents)).then(() => {
-				vscode.window.showInformationMessage(`${_project.name} saved!`);
-			});
+		let finalFileContents: string = '';
 
-			const indentSize: number = vscode.workspace.getConfiguration('editor').get<number>('tabSize') || 4;
-			const cmhFileUri: vscode.Uri = vscode.Uri.joinPath(projectDir, `${_project.name}.cmh`);
-			const cmhFileContents: string = JSON.stringify(_project, undefined, indentSize);
+		for (const line of _fileContents.fileLines) {
+			finalFileContents += `${line}\r\n`;
+		}
 
-			vscode.workspace.fs.writeFile(cmhFileUri, new TextEncoder().encode(cmhFileContents)).then(() => {
-				vscode.window.showInformationMessage(`${_project.name}.cmh saved!`);
-			});
-		});		
+		vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(finalFileContents)).then(() => {
+			vscode.window.showInformationMessage(`${_name} saved!`);
+		});
+	}
+
+	private saveCmhFile(_name: string, _project: Project | RootProject, _directoryUri: vscode.Uri): void
+	{
+		const indentSize: number = vscode.workspace.getConfiguration('editor').get<number>('tabSize') || 4;
+		const cmhFileUri: vscode.Uri = vscode.Uri.joinPath(_directoryUri, `${_name}.cmh`);
+		const cmhFileContents: string = JSON.stringify(_project, undefined, indentSize);
+
+		vscode.workspace.fs.writeFile(cmhFileUri, new TextEncoder().encode(cmhFileContents)).then(() => {
+			vscode.window.showInformationMessage(`${_name}.cmh saved!`);
+		});
 	}
 
 	private readProjectFile(uri: vscode.Uri): Promise<Project>
