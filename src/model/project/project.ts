@@ -17,7 +17,7 @@ export interface Project
 	preCompiledHeader?: string;
 	configHeader?: ProjectConfigHeaderFiles;
 	libraries?: {[key in Visibility]: {[key in LibraryType]: {[key: string]: Library}}};
-	compileDefinitions?: {[key: string]: string[]};
+	compileDefinitions?: {[key in Visibility]: string[]};
 	platform: {[key in PlatformType]: Platform};
 	sourceFiles?: string[];
 }
