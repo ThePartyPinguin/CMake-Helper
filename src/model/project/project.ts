@@ -16,7 +16,7 @@ export interface Project
 	includeDirectories: {[key in Visibility]: string[]};
 	preCompiledHeader?: string;
 	configHeader?: ProjectConfigHeaderFiles;
-	libraries?: {[key in Visibility]: {[key in LibraryType]: {[key: string]: Library}}};
+	libraries?: {[key in Visibility]: {[key in LibraryType]: string[]}};
 	compileDefinitions?: {[key in Visibility]: string[]};
 	platform: {[key in PlatformType]: Platform};
 	sourceFiles?: string[];

@@ -17,13 +17,13 @@ export class CMakeGeneratorHelper
 	public static formatVisibilityVarString(_varName: string, _visibility: Visibility, _variable: CMakeVariable): string
 	{
 		const visibilityString = this.visibilityToCMakeVisibility(_visibility);
-		const varSafeName = this.formatVarSafeString(_varName);
+		const varSafeName = this.formatVarSafeString(_varName).toUpperCase();
 		return `${varSafeName}_${visibilityString}_${_variable}`
 	}
 
 	public static visibilityToCMakeVisibility(_visibility: Visibility): string
 	{
-		const visibility = <Visibility>(<string><unknown>_visibility).toUpperCase()
+		const visibility = <Visibility>(<string><unknown>_visibility).toLowerCase()
 		switch(visibility)
 		{
 			case Visibility.Public:

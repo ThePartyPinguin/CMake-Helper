@@ -1,21 +1,17 @@
 import * as vscode from 'vscode'
-import { Library, LibraryType } from "../../../../model/project/library/library";
+import { LibraryType } from "../../../../model/project/library/library";
 import { Project } from "../../../../model/project/project";
 import { Visibility } from "../../../../model/project/visibility";
 import { EnumToString } from "../../../../util/enum-to-string";
-import { CMakeGeneratorHelper } from "../cmake-generator-helper";
-import { CMakeVariable } from "../cmake-variable";
 
 export class CMakeLibraryGenerator
 {
-	generateLibrary(
-		_project: Project, _libraryName: string, _library: Library,
-		_libraryType: LibraryType, _visibility: Visibility, _fileContent: string[], _indent: boolean = false) {
+	generateLibrary(_project: Project, _libraryName: string, _libraryType: LibraryType, _visibility: Visibility, _fileContent: string[], _indent: boolean = false) {
 
-		if(!_library.includeDirectories)
-		{
-			return;
-		}
+		// if(!_library.includeDirectories)
+		// {
+		// 	return;
+		// }
 
 		const indentation: string = _indent ? '\t' : '';
 
@@ -54,19 +50,19 @@ export class CMakeLibraryGenerator
 			targetIncludeLibOrPackageString = `${indentation}target_link_libraries("${_project.name}" ${_libraryName})`;
 		}
 
-		const definedVisibilities = <Visibility[]>Object.keys(_library.includeDirectories);
+		// const definedVisibilities = <Visibility[]>Object.keys(_library.includeDirectories);
 
-		for (const includeVisibility of definedVisibilities) {
-			const directories = _library.includeDirectories[includeVisibility];
+		// for (const includeVisibility of definedVisibilities) {
+		// 	const directories = _library.includeDirectories[includeVisibility];
 
-			const directoryListVarName = CMakeGeneratorHelper.formatVisibilityVarString(_project.name, includeVisibility, CMakeVariable.LIBRARY_INCLUDE_DIR_LIST);
+		// 	const directoryListVarName = CMakeGeneratorHelper.formatVisibilityVarString(_project.name, includeVisibility, CMakeVariable.LIBRARY_INCLUDE_DIR_LIST);
 
-			_fileContent.push(`${indentation}# ${_libraryName} ${EnumToString.convert(includeVisibility)} include directories`);
+		// 	_fileContent.push(`${indentation}# ${_libraryName} ${EnumToString.convert(includeVisibility)} include directories`);
 
-			for (const directory of directories) {
-				_fileContent.push(`${indentation}list(APPEND "${directoryListVarName}" "${directory}")`);
-			}
-		}
+		// 	for (const directory of directories) {
+		// 		_fileContent.push(`${indentation}list(APPEND "${directoryListVarName}" "${directory}")`);
+		// 	}
+		// }
 
 		_fileContent.push(targetIncludeLibOrPackageCommentString);
 		_fileContent.push(targetIncludeLibOrPackageString);
