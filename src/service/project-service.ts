@@ -48,7 +48,7 @@ export class ProjectService
 		const cmakeContents: GeneratedFileInfo = {
 			fileLines: generator.generateFileLines(_project, CMakeGeneratorHelper.formatVarSafeString(_project.name)),
 			fileName: 'CMakeLists.txt',
-			relativeUri: vscode.Uri.parse('')
+			relativeUri: vscode.Uri.parse(_project.relativePath)
 		};
 
 		this.save(_project.name, cmakeContents, _project);	
