@@ -4,775 +4,399 @@
 	"title": "CMakeHelper Project",
 	"type": "object",
 	"properties": {
-	  "name": {
-		"type": "string"
-	  },
-	  "relativePath": {
-		"type": "string"
-	  },
-	  "type": {
-		"type": "string",
-		"enum": [
-		  "executable",
-		  "static_lib",
-		  "shared_lib"
-		]
-	  },
-	  "version": {
-		"description": "The projects version, eg. 1.0.0",
-		"type": "string"
-	  },
-	  "language": {
-		"type": "object",
-		"properties": {
-		  "CXX": {
-			"description": "CXX (c++) standard",
-			"type": "integer",
-			"enum": [
-			  98,
-			  11,
-			  14,
-			  17,
-			  20,
-			  23
-			]
-		  },
-		  "C": {
-			"description": "C standard",
-			"type": "integer",
-			"enum": [
-			  90,
-			  99,
-			  11
-			]
-		  }
-		},
-		"required": [
-		  "C",
-		  "CXX"
-		]
-	  },
-	  "preCompiledHeader": {
-		"type": "string"
-	  },
-	  "configHeader": {
-		"type": "object",
-		"properties": {
-		  "input": {
+		"name": {
 			"type": "string"
-		  },
-		  "output": {
-			"type": "string"
-		  }
 		},
-		"required": [
-		  "input",
-		  "output"
-		]
-	  },
-	  "sourceDirectory": {
-		"type": "string"
-	  },
-	  "includeDirectories": {
-		"type": "object",
-		"properties": {
-		  "public": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-			},
-			"uniqueItems": true
-		  },
-		  "private": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-			},
-			"uniqueItems": true
-		  },
-		  "interface": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-			},
-			"uniqueItems": true
-		  }
-		}
-	  },
-	  "libraries": {
-		"type": "object",
-		"properties": {
-		  "public": {
+		"relativePath": {
+			"type": "string"
+		},
+		"type": {
+			"type": "string",
+			"enum": [
+				"executable",
+				"static_lib",
+				"shared_lib"
+			]
+		},
+		"version": {
+			"description": "The projects version, eg. 1.0.0",
+			"type": "string"
+		},
+		"language": {
 			"type": "object",
 			"properties": {
-			  "package": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
+				"CXX": {
+					"description": "CXX (c++) standard",
+					"type": "integer",
+					"enum": [
+						98,
+						11,
+						14,
+						17,
+						20,
+						23
+					]
 				},
-				"uniqueItems": true
-			  },
-			  "project": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  },
-			  "library": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  }
-			}
-		  },
-		  "private": {
-			"type": "object",
-			"properties": {
-			  "package": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  },
-			  "project": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  },
-			  "library": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  }
-			}
-		  },
-		  "interface": {
-			"type": "array",
-			"properties": {
-			  "package": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  },
-			  "project": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  },
-			  "library": {
-				"type": "array",
-				"items": {
-				  "type": "string",
-				  "pattern": "^[\\w_\\-\\.]+$"
-				},
-				"uniqueItems": true
-			  }
-			}
-		  }
-		}
-	  },
-	  "compileDefinitions": {
-		"description": "Pre-processor directives",
-		"type": "object",
-		"properties": {
-		  "public": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "pattern": "^[a-zA-Z_]$"
-			},
-			"uniqueItems": true
-		  },
-		  "private": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "pattern": "^[a-zA-Z_]$"
-			},
-			"uniqueItems": true
-		  },
-		  "interface": {
-			"type": "array",
-			"items": {
-			  "type": "string",
-			  "pattern": "^[a-zA-Z_]$"
-			},
-			"uniqueItems": true
-		  }
-		}
-	  },
-	  "platform": {
-		"description": "Platform definitions",
-		"type": "object",
-		"properties": {
-		  "unix": {
-			"description": "Linux platform",
-			"type": "object",
-			"properties": {
-			  "binary": {
-				"type": "object",
-				"properties": {
-				  "name": {
-					"type": "string",
-					"pattern": "^[\\w_\\-\\.]+$"
-				  },
-				  "useTargetSubSystem": {
-					"type": "boolean"
-				  }
-				},
-				"required": [
-				  "name",
-				  "useTargetSubSystem"
-				]
-			  },
-			  "includeDirectories": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  },
-				  "private": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  },
-				  "interface": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  }
+				"C": {
+					"description": "C standard",
+					"type": "integer",
+					"enum": [
+						90,
+						99,
+						11
+					]
 				}
-			  },
-			  "compileDefinitions": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  },
-				  "private": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  },
-				  "interface": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  }
-				}
-			  },
-			  "libraries": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "object",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  },
-				  "private": {
-					"type": "object",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  },
-				  "interface": {
-					"type": "array",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  }
-				}
-			  }
 			},
 			"required": [
-			  "binary"
+				"C",
+				"CXX"
 			]
-		  },
-		  "win32": {
-			"description": "Windows(win32) platform",
+		},
+		"preCompiledHeader": {
+			"type": "string"
+		},
+		"configHeader": {
 			"type": "object",
 			"properties": {
-			  "binary": {
-				"type": "object",
-				"properties": {
-				  "name": {
-					"type": "string",
-					"pattern": "^[\\w_\\-\\.]+$"
-				  },
-				  "useTargetSubSystem": {
-					"type": "boolean"
-				  }
+				"input": {
+					"type": "string"
 				},
-				"required": [
-				  "name",
-				  "useTargetSubSystem"
-				]
-			  },
-			  "includeDirectories": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  },
-				  "private": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  },
-				  "interface": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  }
+				"output": {
+					"type": "string"
 				}
-			  },
-			  "compileDefinitions": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  },
-				  "private": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  },
-				  "interface": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  }
-				}
-			  },
-			  "libraries": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "object",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  },
-				  "private": {
-					"type": "object",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  },
-				  "interface": {
-					"type": "array",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  }
-				}
-			  }
 			},
 			"required": [
-			  "binary"
+				"input",
+				"output"
 			]
-		  },
-		  "apple": {
-			"description": "Apple (osx) platform",
+		},
+		"sourceDirectory": {
+			"type": "string"
+		},
+		"includeDirectories": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+			},
+			"minItems": 1,
+			"uniqueItems": true
+		},
+		"projectLinks": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"pattern": "^[\\w_\\-\\.]+$"
+			},
+			"uniqueItems": true
+		},
+		"packages": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"pattern": "^[\\w_\\-\\.]+$"
+					},
+					"libraries": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"uniqueItems": true
+					},
+					"includeDirectories": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"uniqueItems": true
+					}
+				},
+				"required": [
+					"name"
+				]
+			}
+		},
+		"libraries": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"pattern": "^[\\w_\\-\\.]+$"
+					},
+					"includeDirectories": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+						},
+						"uniqueItems": true
+					}
+				},
+				"required": [
+					"name",
+					"includeDirectories"
+				]
+			}
+		},
+		"compileDefinitions": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"pattern": "^[a-zA-Z_]$"
+			},
+			"uniqueItems": true
+		},
+		"platform": {
 			"type": "object",
 			"properties": {
-			  "binary": {
-				"type": "object",
-				"properties": {
-				  "name": {
-					"type": "string",
-					"pattern": "^[\\w_\\-\\.]+$"
-				  },
-				  "useTargetSubSystem": {
-					"type": "boolean"
-				  }
+				"win32": {
+					"type": "object",
+					"properties": {
+						"binary": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"useTargetSubSystem": {
+									"type": "boolean"
+								}
+							},
+							"required": [
+								"name",
+								"useTargetSubSystem"
+							]
+						},
+						"compileDefinitions": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^[a-zA-Z_]$"
+							},
+							"uniqueItems": true
+						},
+						"includeDirectories": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+							},
+							"minItems": 1,
+							"uniqueItems": true
+						},
+						"projectLinks": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^[\\w_\\-\\.]+$"
+							},
+							"uniqueItems": true
+						},
+						"packages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"pattern": "^[\\w_\\-\\.]+$"
+									},
+									"libraries": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										},
+										"uniqueItems": true
+									},
+									"includeDirectories": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										},
+										"uniqueItems": true
+									}
+								}
+							}
+						}
+					},
+					"required": [
+						"binary"
+					]
 				},
-				"required": [
-				  "name",
-				  "useTargetSubSystem"
-				]
-			  },
-			  "includeDirectories": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  },
-				  "private": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  },
-				  "interface": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
-					},
-					"uniqueItems": true
-				  }
-				}
-			  },
-			  "compileDefinitions": {
-				"type": "object",
-				"properties": {
-				  "public": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  },
-				  "private": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  },
-				  "interface": {
-					"type": "array",
-					"items": {
-					  "type": "string",
-					  "pattern": "^[a-zA-Z_]$"
-					},
-					"uniqueItems": true
-				  }
-				}
-			  },
-			  "libraries": {
-				"type": "object",
-				"properties": {
-				  "public": {
+				"unix": {
 					"type": "object",
 					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"binary": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"useTargetSubSystem": {
+									"type": "boolean"
+								}
+							},
+							"required": [
+								"name",
+								"useTargetSubSystem"
+							]
 						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"compileDefinitions": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^[a-zA-Z_]$"
+							},
+							"uniqueItems": true
 						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"includeDirectories": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+							},
+							"minItems": 1,
+							"uniqueItems": true
 						},
-						"uniqueItems": true
-					  }
-					}
-				  },
-				  "private": {
+						"projectLinks": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^[\\w_\\-\\.]+$"
+							},
+							"uniqueItems": true
+						},
+						"packages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"pattern": "^[\\w_\\-\\.]+$"
+									},
+									"libraries": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										},
+										"uniqueItems": true
+									},
+									"includeDirectories": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										},
+										"uniqueItems": true
+									}
+								}
+							}
+						}
+					},
+					"required": [
+						"binary"
+					]
+				},
+				"apple": {
 					"type": "object",
 					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"binary": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"useTargetSubSystem": {
+									"type": "boolean"
+								}
+							},
+							"required": [
+								"name",
+								"useTargetSubSystem"
+							]
 						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"compileDefinitions": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^[a-zA-Z_]$"
+							},
+							"uniqueItems": true
 						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"includeDirectories": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+							},
+							"minItems": 1,
+							"uniqueItems": true
 						},
-						"uniqueItems": true
-					  }
-					}
-				  },
-				  "interface": {
-					"type": "array",
-					"properties": {
-					  "package": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
+						"projectLinks": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"pattern": "^[\\w_\\-\\.]+$"
+							},
+							"uniqueItems": true
 						},
-						"uniqueItems": true
-					  },
-					  "project": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  },
-					  "library": {
-						"type": "array",
-						"items": {
-						  "type": "string",
-						  "pattern": "^[\\w_\\-\\.]+$"
-						},
-						"uniqueItems": true
-					  }
-					}
-				  }
+						"packages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"pattern": "^[\\w_\\-\\.]+$"
+									},
+									"libraries": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										},
+										"uniqueItems": true
+									},
+									"includeDirectories": {
+										"type": "array",
+										"items": {
+											"type": "string"
+										},
+										"uniqueItems": true
+									}
+								}
+							}
+						}
+					},
+					"required": [
+						"binary"
+					]
 				}
-			  }
+			}
+		},
+		"sourceFiles": {
+			"type": "array",
+			"pattern": "([\\w/\\-_\\.]+)(\\.(c|h|cpp|hpp))$",
+			"items": {
+				"type": "string"
 			},
-			"required": [
-			  "binary"
-			]
-		  }
+			"minItems": 1,
+			"uniqueItems": true
 		}
-	  }
-	},
-	"sourceFiles": {
-	  "type": "array",
-	  "pattern": "([\\w/\\-_\\.]+)(\\.(c|h|cpp|hpp))$",
-	  "items": {
-		"type": "string"
-	  },
-	  "minItems": 1,
-	  "uniqueItems": true
 	},
 	"required": [
-	  "name",
-	  "relativePath",
-	  "type",
-	  "version",
-	  "language",
-	  "sourceDirectory",
-	  "includeDirectories",
-	  "sourceFiles"
+		"name",
+		"relativePath",
+		"type",
+		"version",
+		"language",
+		"sourceDirectory",
+		"includeDirectories",
+		"sourceFiles",
+		"platform"
 	]
-  }
+}

@@ -9,6 +9,6 @@ export enum LibraryType
 
 export interface Library
 {
-	packageLibrary?: string[];
-	//includeDirectories: {[key in Visibility]: string[]};
+	name: string
+	includeDirectories: string[]
 }

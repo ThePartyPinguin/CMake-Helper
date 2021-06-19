@@ -1,19 +1,19 @@
-import { Platform, PlatformType } from "../../../../model/project/platform/platform";
-import { Project } from "../../../../model/project/project";
-import { ProjectType } from "../../../../model/project/project-type";
-import { PropertyGenerator } from "../../property/property-generator";
-import { CMakeGeneratorHelper } from "../cmake-generator-helper";
-import { CMakeVariable } from "../cmake-variable";
+import { Platform, PlatformType } from "../../../../../model/project/platform/platform";
+import { Project } from "../../../../../model/project/project";
+import { ProjectType } from "../../../../../model/project/project-type";
+import { PropertyGenerator } from "../../../property/property-generator";
+import { CMakeGeneratorHelper } from "../../cmake-generator-helper";
+import { CMakeVariable } from "../../cmake-variable";
 
 export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 {
-	generate(_project: Project, _fileContent: string[]): void {
-		const definedPlatforms = <PlatformType[]>Object.keys(_project.platform);
+	generate(_value: Project, _fileContent: string[]): void {
+		const definedPlatforms = <PlatformType[]>Object.keys(_value.platform);
 
 		let targetLinePrefix: string = '';
 		let targetTypeAddition: string = '';
 		
-		switch(_project.type)
+		switch(_value.type)
 		{
 			case ProjectType.EXECUTABLE:
 			{
@@ -37,20 +37,20 @@ export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 		_fileContent.push('# Set Target');
 
 		for (const platformType of definedPlatforms) {
-			const platform: Platform = _project.platform[platformType];
+			const platform: Platform = _value.platform[platformType];
 
 			_fileContent.push(`if(${platformType.toUpperCase()})`);
 
 			const sourceVarName = CMakeGeneratorHelper.formatVarString(this._varSafeUid, CMakeVariable.PROJECT_SOURCE_FILES);
 
-			if(_project.type === ProjectType.EXECUTABLE && platform.binary.useTargetSubSystem)
+			if(_value.type === ProjectType.EXECUTABLE && platform.binary.useTargetSubSystem)
 			{
 				targetTypeAddition = this._getTargetPlatformSubSystem(platformType);
 			}
-			_fileContent.push(`\t${targetLinePrefix}("${_project.name}" ${targetTypeAddition}\${${sourceVarName}})`);
+			_fileContent.push(`\t${targetLinePrefix}("${_value.name}" ${targetTypeAddition}\${${sourceVarName}})`);
 
 			_fileContent.push('\t# Set binary name');
-			_fileContent.push(`\tset_target_properties("${_project.name}" PROPERTIES OUTPUT_NAME "${platform.binary.name}")`);
+			_fileContent.push(`\tset_target_properties("${_value.name}" PROPERTIES OUTPUT_NAME "${platform.binary.name}")`);
 
 			_fileContent.push(`endif()`);
 

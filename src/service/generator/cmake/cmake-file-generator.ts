@@ -1,4 +1,3 @@
-import { GeneratedFileInfo } from "../generated-file-info";
 import { PropertyGenerator } from "../property/property-generator";
 
 export abstract class CMakeFileGenerator<TValue>

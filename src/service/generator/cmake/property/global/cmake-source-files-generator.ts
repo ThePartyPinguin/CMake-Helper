@@ -1,7 +1,7 @@
-import { Project } from "../../../../model/project/project";
-import { PropertyGenerator } from "../../property/property-generator";
-import { CMakeGeneratorHelper } from "../cmake-generator-helper";
-import { CMakeVariable } from "../cmake-variable";
+import { Project } from "../../../../../model/project/project";
+import { PropertyGenerator } from "../../../property/property-generator";
+import { CMakeGeneratorHelper } from "../../cmake-generator-helper";
+import { CMakeVariable } from "../../cmake-variable";
 
 export class CMakeSourceFilesGenerator extends PropertyGenerator<Project>
 {

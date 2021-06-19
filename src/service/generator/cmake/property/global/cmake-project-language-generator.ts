@@ -1,6 +1,6 @@
-import { Project } from "../../../../model/project/project";
-import { ProjectLanguage } from "../../../../model/project/project-language";
-import { PropertyGenerator } from "../../property/property-generator";
+import { Project } from "../../../../../model/project/project";
+import { ProjectLanguage } from "../../../../../model/project/project-language";
+import { PropertyGenerator } from "../../../property/property-generator";
 
 export class CMakeProjectLanguageGenerator extends PropertyGenerator<Project>
 {

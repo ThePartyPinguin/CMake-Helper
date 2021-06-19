@@ -1,8 +1,8 @@
-import { Project } from "../../../../model/project/project";
-import { PropertyGenerator } from "../../property/property-generator";
-import { ProjectCMakeFileGenerator } from "../project-cmake-file-generator";
-import { CMakeGeneratorHelper } from "../cmake-generator-helper";
-import { CMakeVariable } from "../cmake-variable";
+import { Project } from "../../../../../model/project/project";
+import { PropertyGenerator } from "../../../property/property-generator";
+import { ProjectCMakeFileGenerator } from "../../project-cmake-file-generator";
+import { CMakeGeneratorHelper } from "../../cmake-generator-helper";
+import { CMakeVariable } from "../../cmake-variable";
 
 export class CMakeProjectDeclGenerator extends PropertyGenerator<Project>
 {
@@ -17,7 +17,7 @@ export class CMakeProjectDeclGenerator extends PropertyGenerator<Project>
 		projectLine += ` VERSION ${_project.version}`;
 
 		const languages = Object.keys(_project.language);
-		projectLine += `LANGUAGES`;
+		projectLine += ` LANGUAGES`;
 		for (const language of languages) {
 			projectLine += ` ${language}`;
 		}

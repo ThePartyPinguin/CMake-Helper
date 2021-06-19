@@ -1,5 +1,5 @@
-import { Library, LibraryType } from "../library/library";
-import { Visibility } from "../visibility";
+import { Library } from "../library/library";
+import { Package } from "../package/package";
 import { PlatformBinary } from "./platform-binary";
 
 export enum PlatformType
@@ -13,6 +13,9 @@ export enum PlatformType
 export interface Platform
 {
 	binary: PlatformBinary;
-	compileDefinitions?: {[key in Visibility]: string[]};
-	libraries?: {[key in Visibility]: {[key in LibraryType]: string[]}};
+	compileDefinitions?: string[];
+	includeDirectories?: string[];	
+	projectLinks?: string[],
+	packages?: Package[],
+	libraries?: Library[];
 }

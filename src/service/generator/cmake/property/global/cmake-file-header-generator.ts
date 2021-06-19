@@ -1,5 +1,5 @@
-import { Project } from "../../../../model/project/project";
-import { PropertyGenerator } from "../../property/property-generator";
+import { Project } from "../../../../../model/project/project";
+import { PropertyGenerator } from "../../../property/property-generator";
 
 export class CMakeFileHeaderGenerator extends PropertyGenerator<Project>
 {
