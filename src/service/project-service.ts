@@ -12,6 +12,32 @@ export class ProjectService
 	static projectFileExtension: string = '*.cmh'
 	static searchPattern: string = '**/*.{cmh}';
 	
+	static initFileWatcher()
+	{
+		const workSpaceFolders = vscode.workspace.workspaceFolders;
+
+		if(!workSpaceFolders)
+		{
+			vscode.window.showErrorMessage('Could not create file watchers for CMakeHelper');
+			return;
+		}
+
+		const rootUri = workSpaceFolders[0].uri;
+
+		const globSearchPattern = new vscode.RelativePattern(rootUri, ProjectService.searchPattern);
+
+		const watcher = vscode.workspace.createFileSystemWatcher(globSearchPattern, true, false, true);
+		watcher.onDidChange(uri => ProjectService._onFileChanged(uri));
+	}
+
+	private static _onFileChanged(uri: vscode.Uri)
+	{
+		const serviceInstance = new ProjectService();
+		serviceInstance.readProjectFile(uri).then(project => {
+			serviceInstance.saveProject(project, true);
+		});
+	}
+
 	loadProjects(): Promise<{[key: string]: Project}>
 	{
 		return new Promise<{[key: string]: Project}>((resolve, reject) => {		
@@ -42,7 +68,7 @@ export class ProjectService
 		})	
 	}
 
-	saveProject(_project: Project)
+	saveProject(_project: Project, _onlyGeneratedFiles: boolean = false)
 	{
 		const generator = new ProjectCMakeFileGenerator();
 		const cmakeContents: GeneratedFileInfo = {
@@ -51,7 +77,7 @@ export class ProjectService
 			relativeUri: vscode.Uri.parse(_project.relativePath)
 		};
 
-		this.save(_project.name, cmakeContents, _project);	
+		this.save(_project.name, cmakeContents, _project, _onlyGeneratedFiles);	
 	}
 
 	saveRootProject(_project: RootProject)
@@ -66,7 +92,7 @@ export class ProjectService
 		this.save(_project.projectName, cmakeContents, _project);
 	}
 
-	private save(_name: string, _fileContents: GeneratedFileInfo, _project: Project | RootProject): void
+	private save(_name: string, _fileContents: GeneratedFileInfo, _project: Project | RootProject, _onlyGeneratedFiles: boolean = false): void
 	{
 		const workSpaceFolders = vscode.workspace.workspaceFolders;
 
@@ -84,7 +110,11 @@ export class ProjectService
 
 		vscode.workspace.fs.createDirectory(projectDir).then(() => {
 			this.saveCMakeFile(_name, _fileContents, projectDir);
-			this.saveCmhFile(_name, _project, projectDir);
+
+			if(!_onlyGeneratedFiles)
+			{
+				this.saveCmhFile(_name, _project, projectDir);
+			}
 		});
 	}
 

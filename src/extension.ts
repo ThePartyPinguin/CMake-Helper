@@ -4,6 +4,7 @@ import { FlowConfigTemplate } from './flow/flow-config-template';
 import { GenerateProjectFlow } from './flow/generate-project/generate-project-flow';
 import { InitFlow } from './flow/init/init-helper-flow';
 import { FlowService } from './service/flow-service';
+import { ProjectService } from './service/project-service';
 
 
 export function activate(_context: vscode.ExtensionContext) {
@@ -27,6 +28,8 @@ export function activate(_context: vscode.ExtensionContext) {
 		FlowConfigTemplate.getDefaultGenerateProjectFlowConfig,
 		GenerateProjectFlow
 	);
+	
+	ProjectService.initFileWatcher();
 }
 
 export function deactivate() {}
