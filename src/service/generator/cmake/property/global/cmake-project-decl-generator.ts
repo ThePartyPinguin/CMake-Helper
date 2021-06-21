@@ -27,6 +27,7 @@ export class CMakeProjectDeclGenerator extends PropertyGenerator<Project>
 		_fileContent.push(`# Project version variable`);
 		
 		const versionVar = CMakeGeneratorHelper.formatVarString(this._varSafeUid, CMakeVariable.PROJECT_VERSION);
-		_fileContent.push(`set(${versionVar} "\${${_project.name}_VERSION}" PARENT_SCOPE)`);
+		const parentScope = _project.isRootProject ? '' : ' PARENT_SCOPE';
+		_fileContent.push(`set(${versionVar} "\${${_project.name}_VERSION}"${parentScope})`);
 	}
 }

@@ -1,6 +1,7 @@
 import { PlatformType } from "../../../../../model/project/platform/platform";
 import { Project } from "../../../../../model/project/project";
 import { PropertyGenerator } from "../../../property/property-generator";
+import { CMakePlatformChildProjectGenerator } from "./cmake-platform-child-project-generator";
 import { CMakePlatformLibraryGenerator } from "./cmake-platform-library-generator";
 import { CMakePlatformPackageGenerator } from "./cmake-platform-package-generator";
 import { CMakePlatformProjectLinkGenerator } from "./cmake-platform-project-link-generator";
@@ -9,12 +10,18 @@ import { PlatformPropertyGenerator } from "./cmake-platform-property-generator";
 export class CMakePlatformGenerator extends PropertyGenerator<Project>
 {
 	private static generators:  (new(_project: Project, _varSafeFileName: string) => PlatformPropertyGenerator)[]= [
+		CMakePlatformChildProjectGenerator,
 		CMakePlatformLibraryGenerator,
 		CMakePlatformPackageGenerator,
 		CMakePlatformProjectLinkGenerator
 	]
 
 	generate(_value: Project, _fileContent: string[]): void {
+
+		if(!_value.platform)
+		{
+			return;
+		}
 
 		const platformTypes = <PlatformType[]>Object.keys(_value.platform);
 
@@ -35,6 +42,5 @@ export class CMakePlatformGenerator extends PropertyGenerator<Project>
 				_fileContent.push('endif()');
 			}
 		}
-
 	}
 }

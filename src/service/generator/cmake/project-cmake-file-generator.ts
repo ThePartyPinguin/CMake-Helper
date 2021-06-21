@@ -2,7 +2,9 @@ import { Project } from "../../../model/project/project";
 import { PropertyGenerator } from "../property/property-generator";
 import { CMakeFileGenerator } from './cmake-file-generator';
 import { CMakeFileHeaderGenerator } from "./property/global/cmake-file-header-generator";
+import { CMakeGlobalChildProjectGenerator } from "./property/global/cmake-global-child-project-generator";
 import { CMakeGlobalLibraryGenerator } from './property/global/cmake-global-library-generator';
+import { CMakeGlobalOuputDirGenerator } from "./property/global/cmake-global-output-directory";
 import { CMakeGlobalPackageGenerator } from "./property/global/cmake-global-package-generator";
 import { CMakeGlobalProjectLinkGenerator } from "./property/global/cmake-global-project-link-generator";
 import { CMakePlatformTargetGenerator } from "./property/global/cmake-platform-target-generator";
@@ -19,9 +21,11 @@ export class ProjectCMakeFileGenerator extends CMakeFileGenerator<Project>
 		CMakeFileHeaderGenerator,
 		CMakeProjectDeclGenerator,
 		CMakeProjectLanguageGenerator,
+		CMakeGlobalOuputDirGenerator,
 		CMakeSourceFilesGenerator,
 		CMakePlatformTargetGenerator,
 		CMakeProjectIncludeDirGenerator,
+		CMakeGlobalChildProjectGenerator,
 		CMakeGlobalProjectLinkGenerator,
 		CMakeGlobalPackageGenerator,
 		CMakeGlobalLibraryGenerator,

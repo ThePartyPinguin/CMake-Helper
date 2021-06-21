@@ -128,20 +128,16 @@ export abstract class CreateProjectFlow<TFlowConfig extends CreateProjectFlowCon
 			relativePath: _config.relativePath,
 			type: _config.type,
 			version: '1.0.0',
-			language: CreateProjectFlow._getLanguagesFromConfig(_config, '17'),
+			language: CreateProjectFlow._getLanguagesFromConfig(_config, 11),
 			sourceDirectory: _config.srcDir,
-			includeDirectories: {
-				public: [
-					_config.includeDir
-				], 
-				private: [],
-				interface: []
-			},
+			includeDirectories: [
+				_config.includeDir
+			],
 			platform: CreateProjectFlow._getPlatformsFromConfig(_config),
 		}
 	}
 
-	private static _getLanguagesFromConfig(_config: ProjectLanguageConfig, _version: string): {[key in ProjectLanguage]: string}
+	private static _getLanguagesFromConfig(_config: ProjectLanguageConfig, _version: number): {[key in ProjectLanguage]: number}
 	{
 		let result = Object.create(null);
 

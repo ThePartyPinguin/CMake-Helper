@@ -16,7 +16,8 @@ export class CMakeProjectIncludeDirGenerator extends PropertyGenerator<Project>
 
 		const directoryListVarName = CMakeGeneratorHelper.formatVarString(_project.name, CMakeVariable.LIBRARY_INCLUDE_DIR_LIST);
 
-		for (const directory of _project.includeDirectories) {
+		for (const directory of _project.includeDirectories) 
+		{
 			_fileContent.push(`list(APPEND "${directoryListVarName}" "${directory}")`);
 		}
 	}	

@@ -6,6 +6,7 @@ import { CMakeVariable } from "../../cmake-variable";
 export class CMakeSourceFilesGenerator extends PropertyGenerator<Project>
 {
 	generate(_project: Project, _fileContent: string[]): void {
+		
 		if(!_project.sourceFiles || _project.sourceFiles.length <= 0)
 		{
 			return;

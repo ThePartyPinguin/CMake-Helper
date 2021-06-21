@@ -18,4 +18,5 @@ export interface Platform
 	projectLinks?: string[],
 	packages?: Package[],
 	libraries?: Library[];
+	childProjects?: string[];
 }

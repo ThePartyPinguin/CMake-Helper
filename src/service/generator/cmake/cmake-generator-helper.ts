@@ -9,9 +9,10 @@ export class CMakeGeneratorHelper
 		return _value.split(regex).join('_').toUpperCase();
 	}
 
-	public static formatVarString(_varSafeName: string, _variable: CMakeVariable): string
+	public static formatVarString(_varName: string, _variable: CMakeVariable): string
 	{
-		return `${_varSafeName}_${_variable}`
+		const varSafeName = CMakeGeneratorHelper.formatVarSafeString(_varName);
+		return `${varSafeName}_${_variable}`
 	}
 
 	public static formatVisibilityVarString(_varName: string, _visibility: Visibility, _variable: CMakeVariable): string

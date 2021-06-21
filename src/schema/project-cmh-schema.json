@@ -10,6 +10,9 @@
 		"relativePath": {
 			"type": "string"
 		},
+		"isRootProject": {
+			"type": "boolean"
+		},
 		"type": {
 			"type": "string",
 			"enum": [
@@ -386,17 +389,26 @@
 			},
 			"minItems": 1,
 			"uniqueItems": true
+		},
+		"outputDirectory": {
+			"type": "string",
+			"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+		},
+		"childProjects": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+			},
+			"minItems": 1,
+			"uniqueItems": true
 		}
 	},
 	"required": [
 		"name",
 		"relativePath",
-		"type",
 		"version",
 		"language",
-		"sourceDirectory",
-		"includeDirectories",
-		"sourceFiles",
 		"platform"
 	]
 }

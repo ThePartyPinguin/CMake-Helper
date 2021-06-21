@@ -8,6 +8,12 @@ import { CMakeVariable } from "../../cmake-variable";
 export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 {
 	generate(_value: Project, _fileContent: string[]): void {
+
+		if(!_value.type)
+		{
+			return;
+		}
+
 		const definedPlatforms = <PlatformType[]>Object.keys(_value.platform);
 
 		let targetLinePrefix: string = '';

@@ -1,10 +1,8 @@
 import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { Project } from '../model/project/project';
-import { RootProject } from '../model/root-project/root-project';
 import { CMakeGeneratorHelper } from './generator/cmake/cmake-generator-helper';
 import { ProjectCMakeFileGenerator } from './generator/cmake/project-cmake-file-generator';
-import { RootProjectCMakeFileGenerator } from './generator/cmake/root-project-cmake-file-generator';
 import { GeneratedFileInfo } from './generator/generated-file-info';
 
 export class ProjectService
@@ -38,9 +36,9 @@ export class ProjectService
 		});
 	}
 
-	loadProjects(): Promise<{[key: string]: Project}>
+	loadProjects(): Promise<{[key: string]: Project }>
 	{
-		return new Promise<{[key: string]: Project}>((resolve, reject) => {		
+		return new Promise<{[key: string]: Project }>((resolve, reject) => {		
 
 			const workSpaceFolders = vscode.workspace.workspaceFolders;
 
@@ -54,9 +52,9 @@ export class ProjectService
 
 			const globSearchPattern = new vscode.RelativePattern(rootUri, ProjectService.searchPattern);
 			vscode.workspace.findFiles(globSearchPattern, null).then((uris: vscode.Uri[]) => {
-				const promises: Promise<Project>[] = uris.map(uri => this.readProjectFile(uri));
-				Promise.all(promises).then((projectsLoadResult: Project[]) => {
-					const result: {[key: string]: Project} = {};
+				const promises: Promise<Project >[] = uris.map(uri => this.readProjectFile(uri));
+				Promise.all(promises).then((projectsLoadResult: (Project )[]) => {
+					const result: {[key: string]: Project } = {};
 
 					for (const project of projectsLoadResult) {
 						result[project.name] = project;
@@ -80,19 +78,19 @@ export class ProjectService
 		this.save(_project.name, cmakeContents, _project, _onlyGeneratedFiles);	
 	}
 
-	saveRootProject(_project: RootProject)
-	{
-		const generator = new RootProjectCMakeFileGenerator();
-		const cmakeContents: GeneratedFileInfo = {
-			fileLines: generator.generateFileLines(_project, CMakeGeneratorHelper.formatVarSafeString(_project.projectName)),
-			fileName: 'CMakeLists.txt',
-			relativeUri: vscode.Uri.parse('')
-		};
+	// saveRootProject(_project: RootProject, _onlyGeneratedFiles: boolean = false)
+	// {
+	// 	const generator = new RootProjectCMakeFileGenerator();
+	// 	const cmakeContents: GeneratedFileInfo = {
+	// 		fileLines: generator.generateFileLines(_project, CMakeGeneratorHelper.formatVarSafeString(_project.name)),
+	// 		fileName: 'CMakeLists.txt',
+	// 		relativeUri: vscode.Uri.parse('')
+	// 	};
 
-		this.save(_project.projectName, cmakeContents, _project);
-	}
+	// 	this.save(_project.name, cmakeContents, _project, _onlyGeneratedFiles);
+	// }
 
-	private save(_name: string, _fileContents: GeneratedFileInfo, _project: Project | RootProject, _onlyGeneratedFiles: boolean = false): void
+	private save(_name: string, _fileContents: GeneratedFileInfo, _project: Project , _onlyGeneratedFiles: boolean = false): void
 	{
 		const workSpaceFolders = vscode.workspace.workspaceFolders;
 
@@ -133,7 +131,7 @@ export class ProjectService
 		});
 	}
 
-	private saveCmhFile(_name: string, _project: Project | RootProject, _directoryUri: vscode.Uri): void
+	private saveCmhFile(_name: string, _project: Project , _directoryUri: vscode.Uri): void
 	{
 		const indentSize: number = vscode.workspace.getConfiguration('editor').get<number>('tabSize') || 4;
 		const cmhFileUri: vscode.Uri = vscode.Uri.joinPath(_directoryUri, `${_name}.cmh`);
@@ -144,7 +142,7 @@ export class ProjectService
 		});
 	}
 
-	private readProjectFile(uri: vscode.Uri): Promise<Project>
+	private readProjectFile(uri: vscode.Uri): Promise<Project >
 	{
 		return new Promise<Project>((resolve) => {
 			vscode.workspace.fs.readFile(uri).then((data: Uint8Array) => {

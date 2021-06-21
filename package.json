@@ -10,7 +10,9 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:cmake-helper-v2.test",
+		"onCommand:cmake-helper-v2.init",
+		"onCommand:cmake-helper-v2.create-project",
+		"onCommand:cmake-helper-v2.generate",
 		"workspaceContains:**/*.cmh"
 	],
 	"main": "./dist/extension.js",

@@ -9,17 +9,24 @@ export interface Project
 {
 	name: string;
 	relativePath: string,
-	type: ProjectType;
 	version: string;
-	language: {[key in ProjectLanguage]: string};
-	preCompiledHeader?: string;
-	configHeader?: ProjectConfigHeaderFiles;
-	sourceDirectory: string;
-	includeDirectories?: string[];
+	language: {[key in ProjectLanguage]: number};
+	isRootProject?: boolean;
+	platform?: {[key in PlatformType]: Platform};
+	
 	projectLinks?: string[],
 	packages?: Package[],
 	libraries?: Library[];
 	compileDefinitions?: string[];
-	platform: {[key in PlatformType]: Platform};
+
+	type?: ProjectType;
+	preCompiledHeader?: string;
+	configHeader?: ProjectConfigHeaderFiles;
+
+	sourceDirectory?: string;
+	includeDirectories?: string[];
 	sourceFiles?: string[];
+
+	outputDirectory?: string;
+	childProjects?: string[];
 }
