@@ -9,7 +9,7 @@ export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 {
 	generate(_value: Project, _fileContent: string[]): void {
 
-		if(!_value.type)
+		if(!_value.type || !_value.platform)
 		{
 			return;
 		}

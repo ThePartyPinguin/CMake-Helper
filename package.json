@@ -3,6 +3,10 @@
 	"displayName": "cmake Helper",
 	"description": "An extension to help manage your cmake projects",
 	"version": "0.0.1",
+	"publisher": "CMakeHelper",
+	"repository": {
+		"url": "https://git.gameframestudios.com/projects/VE/repos/cmakehelperv2"
+	},
 	"engines": {
 		"vscode": "^1.46.0"
 	},
@@ -13,6 +17,7 @@
 		"onCommand:cmake-helper-v2.init",
 		"onCommand:cmake-helper-v2.create-project",
 		"onCommand:cmake-helper-v2.generate",
+		"onCommand:cmake-helper-v2.add-file",
 		"workspaceContains:**/*.cmh"
 	],
 	"main": "./dist/extension.js",
@@ -29,6 +34,10 @@
 			{
 				"command": "cmake-helper-v2.generate",
 				"title": "CMakeHelper V2: Generate project"
+			},
+			{
+				"command": "cmake-helper-v2.add-file",
+				"title": "CMakeHelper V2: Add file"
 			}
 		]
 	},
