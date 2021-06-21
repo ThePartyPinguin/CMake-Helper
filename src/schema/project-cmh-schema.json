@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://git.gameframestudios.com/projects/VE/repos/cmakehelperv2/raw/src/resources/cmh-schema.json",
+	"$id": "https://git.gameframestudios.com/projects/VE/repos/cmakehelperv2/raw/src/schema/project-cmh-schema.json",
 	"title": "CMakeHelper Project",
 	"type": "object",
 	"properties": {

@@ -1,5 +1,6 @@
-import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
+import * as CMakeHelperSchema from '../schema/project-cmh-schema.json'
+import { TextDecoder, TextEncoder } from 'util';
 import { Project } from '../model/project/project';
 import { CMakeGeneratorHelper } from './generator/cmake/cmake-generator-helper';
 import { ProjectCMakeFileGenerator } from './generator/cmake/project-cmake-file-generator';
@@ -78,18 +79,6 @@ export class ProjectService
 		this.save(_project.name, cmakeContents, _project, _onlyGeneratedFiles);	
 	}
 
-	// saveRootProject(_project: RootProject, _onlyGeneratedFiles: boolean = false)
-	// {
-	// 	const generator = new RootProjectCMakeFileGenerator();
-	// 	const cmakeContents: GeneratedFileInfo = {
-	// 		fileLines: generator.generateFileLines(_project, CMakeGeneratorHelper.formatVarSafeString(_project.name)),
-	// 		fileName: 'CMakeLists.txt',
-	// 		relativeUri: vscode.Uri.parse('')
-	// 	};
-
-	// 	this.save(_project.name, cmakeContents, _project, _onlyGeneratedFiles);
-	// }
-
 	private save(_name: string, _fileContents: GeneratedFileInfo, _project: Project , _onlyGeneratedFiles: boolean = false): void
 	{
 		const workSpaceFolders = vscode.workspace.workspaceFolders;
@@ -154,8 +143,19 @@ export class ProjectService
 	private associateFileExtensionWithJson()
 	{
 		// Assotiate the '.cmh' extension with json so it has the correct syntax highlighting
-		let fileAssotiations: any = vscode.workspace.getConfiguration('files').get('associations') || {};
-		fileAssotiations[ProjectService.projectFileExtension] = 'json';
-		vscode.workspace.getConfiguration('files').update('associations', fileAssotiations);
+		let fileAssociations: any = vscode.workspace.getConfiguration('files').get('associations') || {};
+		fileAssociations[ProjectService.projectFileExtension] = 'json';
+		vscode.workspace.getConfiguration('files').update('associations', fileAssociations);
+
+		let schemaAssociations: {fileMatch: string[], url: string }[] = vscode.workspace.getConfiguration('json').get('schemas') || [];
+
+		if(!schemaAssociations.find(i => i.fileMatch.includes(ProjectService.projectFileExtension)))
+		{
+			schemaAssociations.push({
+				fileMatch: [ ProjectService.projectFileExtension ],
+				url: CMakeHelperSchema.$id
+			});
+		}
+		vscode.workspace.getConfiguration('json').update('schemas', schemaAssociations);
 	}
 }
