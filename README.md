@@ -107,4 +107,6 @@ You can choose just one or a combination of the three.
 
 **Well done! You have configured the project**
 ---
-You should be able to find the CMakeLists.txt in the location specified in the second step. You should also be able to find a .cmh file. This is the configuration file that holds the entire configuration of your CMake project
+You should be able to find the CMakeLists.txt in the location specified in the second step. 
+
+You should also be able to find a .cmh file. This is the configuration file that holds the entire configuration of your CMake project
