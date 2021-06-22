@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://git.gameframestudios.com/projects/VE/repos/cmakehelperv2/raw/src/schema/project-cmh-schema.json",
+	"$id": "https://raw.githubusercontent.com/ThePartyPinguin/CMakeHelper/master/src/schema/project-cmh-schema.json",
 	"title": "CMakeHelper Project",
 	"type": "object",
 	"properties": {
@@ -146,7 +146,7 @@
 			"type": "array",
 			"items": {
 				"type": "string",
-				"pattern": "^[a-zA-Z_]$"
+				"pattern": "^[\\w_]+$"
 			},
 			"uniqueItems": true
 		},
@@ -175,7 +175,7 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"pattern": "^[a-zA-Z_]$"
+								"pattern": "^[\\w_]+$"
 							},
 							"uniqueItems": true
 						},
@@ -220,6 +220,30 @@
 										"uniqueItems": true
 									}
 								}
+							}
+						},
+						"libraries": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"pattern": "^[\\w_\\-\\.]+$"
+									},
+									"includeDirectories": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+										},
+										"uniqueItems": true
+									}
+								},
+								"required": [
+									"name",
+									"includeDirectories"
+								]
 							}
 						}
 					},
@@ -249,7 +273,7 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"pattern": "^[a-zA-Z_]$"
+								"pattern": "^[\\w_]+$"
 							},
 							"uniqueItems": true
 						},
@@ -295,6 +319,30 @@
 									}
 								}
 							}
+						},
+						"libraries": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"pattern": "^[\\w_\\-\\.]+$"
+									},
+									"includeDirectories": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+										},
+										"uniqueItems": true
+									}
+								},
+								"required": [
+									"name",
+									"includeDirectories"
+								]
+							}
 						}
 					},
 					"required": [
@@ -323,7 +371,7 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"pattern": "^[a-zA-Z_]$"
+								"pattern": "^[\\w_]+$"
 							},
 							"uniqueItems": true
 						},
@@ -368,6 +416,30 @@
 										"uniqueItems": true
 									}
 								}
+							}
+						},
+						"libraries": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"pattern": "^[\\w_\\-\\.]+$"
+									},
+									"includeDirectories": {
+										"type": "array",
+										"items": {
+											"type": "string",
+											"pattern": "^(?!/)[\\w/\\-_\\.]+(?<!/)$"
+										},
+										"uniqueItems": true
+									}
+								},
+								"required": [
+									"name",
+									"includeDirectories"
+								]
 							}
 						}
 					},

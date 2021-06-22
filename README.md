@@ -10,9 +10,20 @@ Until the official release you can download the .vsix binaries from the releases
 
 How to install an extension using a .vsix file can be found on the official [documentation page](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix).
 
+## TLDR
+1. Use this command in the VsCode [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
+```
+CMakeHelper: Initialize
+```
+
+2. Follow the step presented to you. 
+3. Use the fully specified json config file from the [wiki](wiki/CMakeHelper-full-json-config-file) to configure the rest of the project
+
 # How to use
 
 This paragraph will explain how to create your first project using CMakeHelper.
+
+wiki/CMakeHelper-full-json-config-file
 
 ## Initialize
 
