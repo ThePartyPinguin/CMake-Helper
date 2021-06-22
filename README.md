@@ -22,14 +22,15 @@ To Initialize CMakeHelper for the first time use the, initialize command in the 
 CMakeHelper: Initialize
 ```
 
-![CMakeHelper-Initialize](docs\images\cmh-initialize.png)
+![CMakeHelper-Initialize](docs/images/cmh-initialize.png)
 
 ## Creating a project
 After initialization you will be asked if you want to create a **Root Project**.
 
-![CMakeHelper-CreateRoot](docs\images\cmh-create-root-project.png)
+![CMakeHelper-CreateRoot](docs/images/cmh-create-root-project.png)
 
 If you are planning on creating a bigger project that will consist of multiple projects select **YES**
+
 If you just want to create a single project select **NO** and continue to [configuring a single project](#configuring-a-single-project).
 
 
@@ -37,13 +38,13 @@ If you just want to create a single project select **NO** and continue to [confi
 
 When using a root project, you will be asked to give the root project a name.
 
-![CMakeHelper-RootName](docs\images\cmh-root-project-name.png)
+![CMakeHelper-RootName](docs/images/cmh-root-project-name.png)
 
 ### Root project location
 
 After setting the name, you will be asked to give the location where the entire project will be located.
 
-![CMakeHelper-RootLocation](docs\images\cmh-root-project-location.png)
+![CMakeHelper-RootLocation](docs/images/cmh-root-project-location.png)
 
 **Well done! You have configured the root project**
 
@@ -53,7 +54,7 @@ After setting the name, you will be asked to give the location where the entire 
 
 When configuring/creating a project you will be asked to give the project a name
 
-![CMakeHelper-ProjectName](docs\images\cmh-project-name.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-name.png)
 
 ### Location
 
@@ -61,7 +62,7 @@ After setting the name of the project you will be asked where the project should
 
 The location can be any **relative directory** in the workspace. If it does not exist yet it will be created.
 
-![CMakeHelper-ProjectName](docs\images\cmh-project-location.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-location.png)
 
 ### The project type
 
@@ -72,13 +73,13 @@ Next you'll be asked to choose a project type. You can choose from:
 
 The will determin the type of binary that will be create when building the project.
 
-![CMakeHelper-ProjectName](docs\images\cmh-project-type.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-type.png)
 
 ### Project language
 
 After setting the type of project, you'll be asked what languages you want to use in the project either C or C++ or both.
 
-![CMakeHelper-ProjectName](docs\images\cmh-project-language.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-language.png)
 
 ### Source and include directory
 
@@ -88,8 +89,8 @@ By default these will be:
  - Source -> src
  - Incluce -> include
 
-![CMakeHelper-ProjectName](docs\images\cmh-project-src-location.png)
-![CMakeHelper-ProjectName](docs\images\cmh-project-include-location.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-src-location.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-include-location.png)
 
 ### Supported platforms
 
@@ -100,7 +101,7 @@ At last you'll be asked what platforms you want to support. These can be:
 
 You can choose just one or a combination of the three.
 
-![CMakeHelper-ProjectName](docs\images\cmh-project-supported-platforms.png)
+![CMakeHelper-ProjectName](docs/images/cmh-project-supported-platforms.png)
 
 ---
 
