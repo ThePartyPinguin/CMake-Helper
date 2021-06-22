@@ -17,7 +17,7 @@ CMakeHelper: Initialize
 ```
 
 2. Follow the step presented to you. 
-3. Use the fully specified json config file from the [wiki](wiki/CMakeHelper-full-json-config-file) to configure the rest of the project
+3. Use the fully specified json config file from the [wiki](https://github.com/ThePartyPinguin/CMakeHelper/wiki/CMakeHelper-full-json-config-file) to configure the rest of the project
 
 # How to use
 
