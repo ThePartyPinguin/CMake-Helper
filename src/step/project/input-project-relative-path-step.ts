@@ -3,16 +3,17 @@ import { RegexConstants } from "../../util/regex-constants";
 import { RegexValidatedTextInputStep } from "../input/regex-validated-text-input-step";
 import { TextInputStepConfig } from "../input/text-input-step";
 import { StepNames } from "../step-names";
+import { ProjectNameConfig } from "./input-project-name-step";
 
-export interface ProjectRelativePathConfig extends BaseFlowConfig
+export interface ProjectRelativePathConfig extends 
+	BaseFlowConfig,
+	ProjectNameConfig
 {
 	relativePath: string;
 }
 
 export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePathConfig> extends RegexValidatedTextInputStep<TFlowConfig>
 {
-	private _directoryRegex: RegExp;
-
 	constructor(
 		_config: TFlowConfig)
 	{
@@ -22,7 +23,6 @@ export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePat
 			validationMessage: `Invalid input! Path should be conform regex: '${RegexConstants.relativeDirectoryRegex}'`,
 			allowEmpty: true
 		});
-		this._directoryRegex = new RegExp(RegexConstants.relativeDirectoryRegex, 'gi');
 	}
 
 	protected onInput(inputValue: string): void {
@@ -36,10 +36,14 @@ export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePat
 	}
 	
 	public getStepConfig(): TextInputStepConfig {
+
+		const defaultValue: string = 'rootProjectName' in this.config ? this.config.projectName : '';
+
 		return {
 			stepTitle: 'Enter relative path',
 			prompt: 'Enter the relative path where the project should be saved. Empty for workspace root',
 			placeHolder: 'Path (empty for workspace root)',
+			defaultValue: defaultValue,
 			ignoreFocusOut: true
 		}
 	}

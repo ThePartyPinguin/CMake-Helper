@@ -34,7 +34,7 @@ export class FlowConfigTemplate
 		return {
 			flowName:  'Create project',
 			rootProjectName: '',
-			rootBinaryDirectory: '',
+			rootProjectDirectory: '',
 			projectName: '',
 			relativePath: '',
 			type: ProjectType.EXECUTABLE,

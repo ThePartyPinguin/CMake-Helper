@@ -5,7 +5,8 @@ import { StepDisplayType } from "../step-display-type";
 
 export interface TextInputStepConfig extends BaseStepConfig
 {
-	prompt: string
+	prompt: string,
+	defaultValue?: string
 }
 
 export abstract class TextInputStep<TFlowConfig extends BaseFlowConfig> extends BaseStep<TFlowConfig, TextInputStepConfig>

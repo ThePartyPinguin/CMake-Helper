@@ -4,7 +4,7 @@ import { StepNames } from "../step-names";
 
 export interface InitConfig extends BaseFlowConfig
 {
-	isGroupingProject?: boolean;
+	isRootProject?: boolean;
 }
 
 export class InitStep<TFlowConfig extends InitConfig> extends SelectionInputStep<boolean, TFlowConfig>
@@ -25,12 +25,12 @@ export class InitStep<TFlowConfig extends InitConfig> extends SelectionInputStep
 	}
 
 	protected onValueSelected(selectedItem: SelectionItem<boolean>): void {
-		this.config.isGroupingProject = selectedItem.item;
+		this.config.isRootProject = selectedItem.item;
 	}
 
 	public getStepConfig(): SelectionInputStepConfig<boolean> {
 		return <SelectionInputStepConfig<boolean>>{
-			stepTitle: 'Create a grouping project?',
+			stepTitle: 'Create a root project?',
 			placeHolder: 'Yes/No',
 			items: [
 				{
@@ -45,7 +45,8 @@ export class InitStep<TFlowConfig extends InitConfig> extends SelectionInputStep
 					detail: 'This wil create a single project in the root directory',
 					item: false
 				}
-			]
+			],
+			ignoreFocusOut: true
 		}
 	}
 	

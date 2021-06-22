@@ -64,6 +64,8 @@ export class FlowRunner
 			inputValue = value;
 		});
 
+		inputBox.value = stepConfig.defaultValue ? stepConfig.defaultValue : '';
+
 		// When the user accepts the input (presses enter) fire the step accept callback and go to next step if any
 		inputBox.onDidAccept(() => {
 			inputAccepted = true;

@@ -13,25 +13,25 @@ export function activate(_context: vscode.ExtensionContext) {
 	const flowService = new FlowService(_context)
 
 	flowService.registerFlow(
-		'cmake-helper-v2.init',
+		'cmake-helper.init',
 		FlowConfigTemplate.getDefaultInitFlowConfig,
 		InitFlow
 	);
 
 	flowService.registerFlow(
-		'cmake-helper-v2.create-project',
+		'cmake-helper.create-project',
 		FlowConfigTemplate.getDefaultCreateProjectFlowConfig,
 		CreateSingleProjectFlow
 	);
 
 	flowService.registerFlow(
-		'cmake-helper-v2.generate',
+		'cmake-helper.generate',
 		FlowConfigTemplate.getDefaultGenerateProjectFlowConfig,
 		GenerateProjectFlow
 	);
 
 	flowService.registerFlow(
-		'cmake-helper-v2.add-file',
+		'cmake-helper.add-file',
 		FlowConfigTemplate.getDefaultGenerateProjectFlowConfig,
 		AddFileToProjectFlow
 	);

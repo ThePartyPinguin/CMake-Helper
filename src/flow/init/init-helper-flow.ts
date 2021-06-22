@@ -21,7 +21,7 @@ export class InitFlow extends BaseFlow<InitFlowConfig>
 
 	private static _onInitAccept(_config: InitFlowConfig): undefined
 	{
-		if(_config.isGroupingProject)
+		if(_config.isRootProject)
 		{
 			vscode.window.showInformationMessage('Creating root project');
 			const createProjectConfig = FlowConfigTemplate.getDefaultCreateRootProjectFlowConfig();

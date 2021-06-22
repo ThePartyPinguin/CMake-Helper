@@ -27,7 +27,7 @@ export class InputRootProjectNameStep<TConfig extends RootProjectNameConfig> ext
 
 	public getStepConfig(): TextInputStepConfig {
 		return {
-			stepTitle: this.config.flowName,
+			stepTitle: 'Create root project',
 			placeHolder: 'Enter root project name',
 			prompt: 'Please enter a valid root project name consisting of only a-z, A-Z, 0-9, -, _',
 			ignoreFocusOut: true

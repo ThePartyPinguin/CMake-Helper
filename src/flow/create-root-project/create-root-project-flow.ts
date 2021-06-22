@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Project } from '../../model/project/project';
 import { ProjectService } from '../../service/project-service';
 import { InputRootProjectNameStep } from "../../step/root-project/input-root-project-name-step";
-import { InputRootProjectBinaryDirStep } from '../../step/root-project/input-root-root-project-binary-dir';
+import { InputRootProjectDirStep } from '../../step/root-project/input-root-root-project-binary-dir';
 import { StepBluePrint } from "../../step/step-blueprint";
 import { CreateProjectFlow } from '../create-project/create-project-flow';
 import { CreateRootProjectFlowConfig } from "./create-root-project-flow-config";
@@ -22,7 +22,7 @@ export class CreateRootProjectFlow extends CreateProjectFlow<CreateRootProjectFl
 		vscode.window.showInformationMessage(`Root project name set: ${_config.rootProjectName}`);
 
 		return {
-			stepType: InputRootProjectBinaryDirStep,
+			stepType: InputRootProjectDirStep,
 			accept: CreateRootProjectFlow._onRootBinaryNameAccept,
 			cancel: CreateRootProjectFlow._onRootProjectCreateCancel
 		};
@@ -30,7 +30,7 @@ export class CreateRootProjectFlow extends CreateProjectFlow<CreateRootProjectFl
 
 	private static _onRootBinaryNameAccept(_config: CreateRootProjectFlowConfig): StepBluePrint<CreateRootProjectFlowConfig>
 	{
-		vscode.window.showInformationMessage(`Root binary directory set: ${_config.rootBinaryDirectory}`);
+		vscode.window.showInformationMessage(`Root binary directory set: ${_config.rootProjectDirectory}`);
 		return CreateRootProjectFlow.continueProjectCreateFlow(_config, CreateRootProjectFlow._onCreateFlowComplete);
 	}
 
@@ -41,14 +41,13 @@ export class CreateRootProjectFlow extends CreateProjectFlow<CreateRootProjectFl
 
 	private static _onCreateFlowComplete(_config: CreateRootProjectFlowConfig, _project: Project): void
 	{
-		vscode.window.showInformationMessage(`Root binary directory set: ${_config.rootBinaryDirectory}`);
+		vscode.window.showInformationMessage(`Root binary directory set: ${_config.rootProjectDirectory}`);
 		const rootProject: Project = {
 			name: _config.rootProjectName,
-			relativePath: '',
+			relativePath: _config.rootProjectDirectory,
 			version: '1.0.0.0',
 			language: _project.language,
 			isRootProject: true,
-			outputDirectory: _config.rootBinaryDirectory,
 			childProjects: [
 				_project.relativePath
 			]

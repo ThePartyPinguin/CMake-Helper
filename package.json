@@ -14,30 +14,30 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:cmake-helper-v2.init",
-		"onCommand:cmake-helper-v2.create-project",
-		"onCommand:cmake-helper-v2.generate",
-		"onCommand:cmake-helper-v2.add-file",
+		"onCommand:cmake-helper.init",
+		"onCommand:cmake-helper.create-project",
+		"onCommand:cmake-helper.generate",
+		"onCommand:cmake-helper.add-file",
 		"workspaceContains:**/*.cmh"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "cmake-helper-v2.init",
-				"title": "CMakeHelper V2: Initialize"
+				"command": "cmake-helper.init",
+				"title": "CMakeHelper: Initialize"
 			},
 			{
-				"command": "cmake-helper-v2.create-project",
-				"title": "CMakeHelper V2: Create project"
+				"command": "cmake-helper.create-project",
+				"title": "CMakeHelper: Create project"
 			},
 			{
-				"command": "cmake-helper-v2.generate",
-				"title": "CMakeHelper V2: Generate project"
+				"command": "cmake-helper.generate",
+				"title": "CMakeHelper: Generate project"
 			},
 			{
-				"command": "cmake-helper-v2.add-file",
-				"title": "CMakeHelper V2: Add file"
+				"command": "cmake-helper.add-file",
+				"title": "CMakeHelper: Add file"
 			}
 		]
 	},

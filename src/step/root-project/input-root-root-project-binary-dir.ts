@@ -6,10 +6,10 @@ import { StepNames } from "../step-names";
 
 export interface RootProjectBinaryDir extends BaseFlowConfig
 {
-	rootBinaryDirectory: string
+	rootProjectDirectory: string
 }
 
-export class InputRootProjectBinaryDirStep<TFlowConfig extends RootProjectBinaryDir> extends RegexValidatedTextInputStep<TFlowConfig>
+export class InputRootProjectDirStep<TFlowConfig extends RootProjectBinaryDir> extends RegexValidatedTextInputStep<TFlowConfig>
 {
 	constructor(_config: TFlowConfig)
 	{
@@ -24,16 +24,16 @@ export class InputRootProjectBinaryDirStep<TFlowConfig extends RootProjectBinary
 	protected onInput(inputValue: string): void {
 		if(!inputValue || inputValue == '')
 		{
-			this.config.rootBinaryDirectory = 'bin';
+			this.config.rootProjectDirectory = 'bin';
 			return;
 		}
 
-		this.config.rootBinaryDirectory = inputValue;
+		this.config.rootProjectDirectory = inputValue;
 	}
 
 	public getStepConfig(): TextInputStepConfig {
 		return {
-			stepTitle: 'Enter relative path',
+			stepTitle: 'Create root project',
 			prompt: 'Enter the relative path where the project should be saved. Empty for default (bin)',
 			placeHolder: 'Path (empty for workspace root)',
 			ignoreFocusOut: true

@@ -49,11 +49,7 @@
 						11
 					]
 				}
-			},
-			"required": [
-				"C",
-				"CXX"
-			]
+			}
 		},
 		"preCompiledHeader": {
 			"type": "string"
