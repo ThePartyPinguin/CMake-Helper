@@ -121,3 +121,6 @@ You can choose just one or a combination of the three.
 You should be able to find the CMakeLists.txt in the location specified in the second step. 
 
 You should also be able to find a .cmh file. This is the configuration file that holds the entire configuration of your CMake project
+
+## What's next?
+Use the fully filled out json config on the [wiki](https://github.com/ThePartyPinguin/CMakeHelper/wiki/CMakeHelper-full-json-config-file) to configure the rest of the project(s)
