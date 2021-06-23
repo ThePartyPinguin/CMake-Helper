@@ -11,3 +11,7 @@
 - Fixed directory issue with root projects
 - Removed 'platform' as required from schema as it isn't required for a rootproject
 - Fixed project relative path regex
+- Added missing generators
+- Fixed issues with relative paths not valid as include directories
+- Fixed schema regex pattern for compile definitions
+- Fixed formatting issues in generators
