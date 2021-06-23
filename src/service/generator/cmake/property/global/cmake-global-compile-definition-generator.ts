@@ -19,6 +19,6 @@ export class CMakeGlobalCompileDefinitionGenerator extends PropertyGenerator<Pro
 			definitionsLine += ` "${definition}"`;
 		}
 
-		_fileContent.push(`target_compile_definitions("${_value.name}" PUBLIC${definitionsLine}")`);
+		_fileContent.push(`target_compile_definitions("${_value.name}" PUBLIC${definitionsLine})`);
 	}	
 }

@@ -16,9 +16,9 @@ export class CMakeplatformCompileDefinitionGenerator extends PlatformPropertyGen
 
 		for (const definition of _value.compileDefinitions) 
 		{
-			definitionsLine += ` ${definition}`;
+			definitionsLine += ` "${definition}"`;
 		}
 
-		_fileContent.push(`target_compile_definitions("${this.project.name} PUBLIC${definitionsLine}")`);
+		_fileContent.push(`target_compile_definitions("${this.project.name}" PUBLIC${definitionsLine})`);
 	}	
 }
