@@ -3,9 +3,11 @@ import { PropertyGenerator } from "../property/property-generator";
 import { CMakeFileGenerator } from './cmake-file-generator';
 import { CMakeFileHeaderGenerator } from "./property/global/cmake-file-header-generator";
 import { CMakeGlobalChildProjectGenerator } from "./property/global/cmake-global-child-project-generator";
+import { CMakeGlobalCompileDefinitionGenerator } from "./property/global/cmake-global-compile-definition-generator";
 import { CMakeGlobalLibraryGenerator } from './property/global/cmake-global-library-generator';
 import { CMakeGlobalOuputDirGenerator } from "./property/global/cmake-global-output-directory";
 import { CMakeGlobalPackageGenerator } from "./property/global/cmake-global-package-generator";
+import { CMakeGlobalPreCompiledHeaderGenerator } from "./property/global/cmake-global-pre-compiled-header-generator";
 import { CMakeGlobalProjectLinkGenerator } from "./property/global/cmake-global-project-link-generator";
 import { CMakePlatformTargetGenerator } from "./property/global/cmake-platform-target-generator";
 import { CMakeProjectDeclGenerator } from "./property/global/cmake-project-decl-generator";
@@ -24,13 +26,15 @@ export class ProjectCMakeFileGenerator extends CMakeFileGenerator<Project>
 		CMakeGlobalOuputDirGenerator,
 		CMakeSourceFilesGenerator,
 		CMakePlatformTargetGenerator,
+		CMakeGlobalPreCompiledHeaderGenerator,
 		CMakeProjectIncludeDirGenerator,
 		CMakeGlobalChildProjectGenerator,
 		CMakeGlobalProjectLinkGenerator,
 		CMakeGlobalPackageGenerator,
 		CMakeGlobalLibraryGenerator,
 		CMakePlatformGenerator,
-		CMakeTargetIncludeDirGenerator
+		CMakeTargetIncludeDirGenerator,
+		CMakeGlobalCompileDefinitionGenerator,
 	]
 
 	protected getGenerators(): (new (_varSafeUid: string) => PropertyGenerator<Project>)[] {

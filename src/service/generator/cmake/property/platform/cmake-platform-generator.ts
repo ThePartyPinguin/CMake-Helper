@@ -2,6 +2,8 @@ import { PlatformType } from "../../../../../model/project/platform/platform";
 import { Project } from "../../../../../model/project/project";
 import { PropertyGenerator } from "../../../property/property-generator";
 import { CMakePlatformChildProjectGenerator } from "./cmake-platform-child-project-generator";
+import { CMakeplatformCompileDefinitionGenerator } from "./cmake-platform-compile-definition-generator";
+import { CMakePlatformIncludeDirGenerator } from "./cmake-platform-include-dir-generator";
 import { CMakePlatformLibraryGenerator } from "./cmake-platform-library-generator";
 import { CMakePlatformPackageGenerator } from "./cmake-platform-package-generator";
 import { CMakePlatformProjectLinkGenerator } from "./cmake-platform-project-link-generator";
@@ -13,7 +15,9 @@ export class CMakePlatformGenerator extends PropertyGenerator<Project>
 		CMakePlatformChildProjectGenerator,
 		CMakePlatformLibraryGenerator,
 		CMakePlatformPackageGenerator,
-		CMakePlatformProjectLinkGenerator
+		CMakePlatformProjectLinkGenerator,
+		CMakePlatformIncludeDirGenerator,
+		CMakeplatformCompileDefinitionGenerator
 	]
 
 	generate(_value: Project, _fileContent: string[]): void {
