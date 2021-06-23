@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Project } from '../../model/project/project';
 import { ProjectService } from '../../service/project-service';
 import { InputRootProjectNameStep } from "../../step/root-project/input-root-project-name-step";
-import { InputRootProjectDirStep } from '../../step/root-project/input-root-root-project-binary-dir';
+import { InputRootProjectDirStep } from '../../step/root-project/input-root-project-dir-step';
 import { StepBluePrint } from "../../step/step-blueprint";
 import { CreateProjectFlow } from '../create-project/create-project-flow';
 import { CreateRootProjectFlowConfig } from "./create-root-project-flow-config";
@@ -39,7 +39,7 @@ export class CreateRootProjectFlow extends CreateProjectFlow<CreateRootProjectFl
 		vscode.window.showErrorMessage('Root project creation canceled');
 	}
 
-	private static _onCreateFlowComplete(_config: CreateRootProjectFlowConfig, _project: Project): void
+	private static _onCreateFlowComplete(_config: CreateRootProjectFlowConfig, _project: Project): undefined
 	{
 		vscode.window.showInformationMessage(`Root binary directory set: ${_config.rootProjectDirectory}`);
 		const rootProject: Project = {
@@ -56,5 +56,6 @@ export class CreateRootProjectFlow extends CreateProjectFlow<CreateRootProjectFl
 		const projectService: ProjectService = new ProjectService();
 		projectService.saveProject(rootProject);
 		projectService.saveProject(_project);
+		return undefined;
 	}
 }

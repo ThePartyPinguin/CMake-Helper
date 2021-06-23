@@ -22,12 +22,6 @@ export class InputRootProjectDirStep<TFlowConfig extends RootProjectBinaryDir> e
 	}
 	
 	protected onInput(inputValue: string): void {
-		if(!inputValue || inputValue == '')
-		{
-			this.config.rootProjectDirectory = 'bin';
-			return;
-		}
-
 		this.config.rootProjectDirectory = inputValue;
 	}
 

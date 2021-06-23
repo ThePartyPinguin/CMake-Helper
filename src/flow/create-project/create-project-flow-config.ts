@@ -6,6 +6,7 @@ import { SourceDirConfig } from "../../step/project/input-source-dir-step";
 import { ProjectLanguageConfig } from "../../step/project/select-project-language-step";
 import { PlatformConfig } from "../../step/project/select-project-platform-step";
 import { ProjectTypeConfig } from "../../step/project/select-project-type-step";
+import { StepBluePrint } from "../../step/step-blueprint";
 import { BaseFlowConfig } from "../base-flow-config";
 
 export interface CreateProjectFlowConfig<TDerived extends CreateProjectFlowConfig<TDerived>> extends 
@@ -18,5 +19,5 @@ export interface CreateProjectFlowConfig<TDerived extends CreateProjectFlowConfi
 	IncludeDirConfig,
 	PlatformConfig
 {
-	onCreationComplete?: (_config: TDerived, _project: Project) => void;
+	onCreationComplete?: (_config: TDerived, _project: Project) => StepBluePrint<TDerived> | undefined;
 }

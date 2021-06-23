@@ -15,18 +15,28 @@ export class FlowConfigTemplate
 		}
 	}
 
-	static getDefaultCreateProjectFlowConfig(): CreateSingleProjectFlowConfig
+	static getDefaultCreateProjectFlowConfig(): Promise<CreateSingleProjectFlowConfig>
 	{
-		return {
-			flowName:  'Create project',
-			projectName: '',
-			relativePath: '',
-			type: ProjectType.EXECUTABLE,
-			languages: [],
-			srcDir: '',
-			includeDir: '',
-			platforms: []
-		};
+		return new Promise<CreateSingleProjectFlowConfig>((resolve) => {
+			const projectService = new ProjectService();
+
+			projectService.loadProjects().then(projects => {
+
+				const createSingleProjectConfig: CreateSingleProjectFlowConfig = {
+					flowName:  'Create project',
+					projectName: '',
+					relativePath: '',
+					type: ProjectType.EXECUTABLE,
+					languages: [],
+					srcDir: '',
+					includeDir: '',
+					platforms: [],
+					existingProjects: projects
+				};
+
+				resolve(createSingleProjectConfig);
+			});
+		})
 	}
 
 	static getDefaultCreateRootProjectFlowConfig(): CreateRootProjectFlowConfig

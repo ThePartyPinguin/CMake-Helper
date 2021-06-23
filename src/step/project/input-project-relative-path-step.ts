@@ -21,7 +21,7 @@ export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePat
 			regexString: RegexConstants.relativeDirectoryRegex,
 			regexFlags: 'gi',
 			validationMessage: `Invalid input! Path should be conform regex: '${RegexConstants.relativeDirectoryRegex}'`,
-			allowEmpty: true
+			allowEmpty:  !('rootProjectName' in _config) // Only allow an empty path if we're not creating a root project aswell
 		});
 	}
 

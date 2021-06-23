@@ -14,7 +14,7 @@ export class CMakeProjectIncludeDirGenerator extends PropertyGenerator<Project>
 
 		_fileContent.push('# Global include directories')
 
-		const directoryListVarName = CMakeGeneratorHelper.formatVarString(_project.name, CMakeVariable.LIBRARY_INCLUDE_DIR_LIST);
+		const directoryListVarName = CMakeGeneratorHelper.formatVarString(_project.name, CMakeVariable.INCLUDE_DIR_LIST);
 
 		for (const directory of _project.includeDirectories) 
 		{

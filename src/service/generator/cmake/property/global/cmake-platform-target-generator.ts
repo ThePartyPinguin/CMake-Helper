@@ -46,6 +46,8 @@ export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 			const platform: Platform = _value.platform[platformType];
 
 			_fileContent.push(`if(${platformType.toUpperCase()})`);
+			_fileContent.push(`\tmessage("Buidling for: ${platformType.toUpperCase()}")`);
+
 
 			const sourceVarName = CMakeGeneratorHelper.formatVarString(this._varSafeUid, CMakeVariable.PROJECT_SOURCE_FILES);
 

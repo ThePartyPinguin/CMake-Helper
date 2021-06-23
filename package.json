@@ -2,10 +2,10 @@
 	"name": "cmake-helper",
 	"displayName": "cmake Helper",
 	"description": "An extension to help manage your cmake projects",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "CMakeHelper",
 	"repository": {
-		"url": "https://git.gameframestudios.com/projects/VE/repos/cmakehelperv2"
+		"url": "https://github.com/ThePartyPinguin/CMakeHelper"
 	},
 	"engines": {
 		"vscode": "^1.46.0"

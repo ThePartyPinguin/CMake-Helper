@@ -13,7 +13,7 @@ export class CMakeProjectDeclGenerator extends PropertyGenerator<Project>
 		// Create project decleration that include name, version and languages
 		_fileContent.push(`# Project`);
 
-		let projectLine = _project.name;
+		let projectLine = `"${_project.name}"`;
 		projectLine += ` VERSION ${_project.version}`;
 
 		const languages = Object.keys(_project.language);

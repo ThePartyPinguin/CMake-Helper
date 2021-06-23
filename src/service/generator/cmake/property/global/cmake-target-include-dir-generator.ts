@@ -15,7 +15,7 @@ export class CMakeTargetIncludeDirGenerator extends PropertyGenerator<Project>
 			return;
 		}
 
-		const directoryListVarName = CMakeGeneratorHelper.formatVarString(_project.name, CMakeVariable.LIBRARY_INCLUDE_DIR_LIST);
+		const directoryListVarName = CMakeGeneratorHelper.formatVarString(_project.name, CMakeVariable.INCLUDE_DIR_LIST);
 
 		_fileContent.push('# Set target include directories');
 		_fileContent.push(`target_include_directories("${_project.name}" PUBLIC "\${${directoryListVarName}}")`);

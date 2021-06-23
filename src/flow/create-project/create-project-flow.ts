@@ -17,7 +17,7 @@ export abstract class CreateProjectFlow<TFlowConfig extends CreateProjectFlowCon
 {
 	protected static continueProjectCreateFlow<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(
 		_config: TFlowConfig,
-		_onCreationComplete: (_config: TFlowConfig, _project: Project) => void): StepBluePrint<TFlowConfig> {
+		_onCreationComplete: (_config: TFlowConfig, _project: Project) => StepBluePrint<TFlowConfig> | undefined): StepBluePrint<TFlowConfig> {
 
 		_config.onCreationComplete = _onCreationComplete;
 
@@ -94,22 +94,11 @@ export abstract class CreateProjectFlow<TFlowConfig extends CreateProjectFlowCon
 		}
 	}
 
-	private static _onProjectPlatformSet<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): undefined
+	private static _onProjectPlatformSet<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): StepBluePrint<TFlowConfig> | undefined
 	{
 		vscode.window.showInformationMessage(`Project supported plaforms set: ${JSON.stringify(_config.platforms)}`);
 		vscode.window.showInformationMessage(`Project configuration complete! Generating cmake files`);
 
-		CreateProjectFlow._onProjectCreationFinish(_config);
-		return undefined;
-	}
-
-	private static _onProjectCreationCanceled<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig)
-	{
-		vscode.window.showErrorMessage('Project creation canceled');
-	}
-
-	private static _onProjectCreationFinish<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig)
-	{
 		const project = CreateProjectFlow._convertFlowConfigToProject(_config);
 
 		if(!_config.onCreationComplete)
@@ -118,7 +107,12 @@ export abstract class CreateProjectFlow<TFlowConfig extends CreateProjectFlowCon
 			return;
 		}
 
-		_config.onCreationComplete(_config, project);
+		return _config.onCreationComplete(_config, project);
+	}
+
+	private static _onProjectCreationCanceled<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig)
+	{
+		vscode.window.showErrorMessage('Project creation canceled');
 	}
 
 	private static _convertFlowConfigToProject<TFlowConfig extends CreateProjectFlowConfig<TFlowConfig>>(_config: TFlowConfig): Project

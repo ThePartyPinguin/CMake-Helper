@@ -5,6 +5,7 @@ import { StepNames } from "../step-names";
 
 export interface SelectProjectConfig extends BaseFlowConfig
 {
+	onlyNonRootProjects?: boolean
 	existingProjects: {[key: string]: Project}
 	selectedProject?: Project
 }
@@ -27,7 +28,17 @@ export class SelectProjectStep<TFlowConfig extends SelectProjectConfig> extends 
 
 	public getStepConfig(): SelectionInputStepConfig<Project> {
 
-		const projectNames = Object.keys(this.config.existingProjects);
+		let projectNames: string[];
+
+		if(this.config.onlyNonRootProjects)
+		{
+			projectNames = Object.values(this.config.existingProjects)
+				.filter(p => !p.isRootProject)
+				.map(p => p.name);
+		}
+		else{
+			projectNames = Object.keys(this.config.existingProjects);
+		} 
 
 		return {
 			stepTitle: this.config.flowName,

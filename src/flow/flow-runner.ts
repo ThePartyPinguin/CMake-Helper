@@ -49,7 +49,7 @@ export class FlowRunner
 	{
 		const stepConfig = <TextInputStepConfig>_step.getStepConfig();
 
-		let inputValue: string = '';
+		let inputValue: string = stepConfig.defaultValue ? stepConfig.defaultValue : '';
 		let inputAccepted: boolean = false;
 
 		const inputBox = vscode.window.createInputBox();

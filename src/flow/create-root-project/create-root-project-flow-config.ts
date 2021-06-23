@@ -1,5 +1,5 @@
 import { RootProjectNameConfig } from "../../step/root-project/input-root-project-name-step";
-import { RootProjectBinaryDir } from "../../step/root-project/input-root-root-project-binary-dir";
+import { RootProjectBinaryDir } from "../../step/root-project/input-root-project-dir-step";
 import { BaseFlowConfig } from "../base-flow-config";
 import { CreateProjectFlowConfig } from "../create-project/create-project-flow-config";
 
