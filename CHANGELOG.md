@@ -5,7 +5,7 @@
 - Initial release
 - Added documentation
 
-### v0.0.2 - June 23nd 2021
+### v0.0.3 - June 23nd 2021
 
 - Added first release
 - Fixed directory issue with root projects
