@@ -37,7 +37,7 @@ export class InputProjectRelativePathStep<TFlowConfig extends ProjectRelativePat
 	
 	public getStepConfig(): TextInputStepConfig {
 
-		const defaultValue: string = 'rootProjectName' in this.config ? this.config.projectName : '';
+		const defaultValue: string = this.config.projectName;
 
 		return {
 			stepTitle: 'Enter relative path',

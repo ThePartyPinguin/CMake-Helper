@@ -10,3 +10,4 @@
 - Added first release
 - Fixed directory issue with root projects
 - Removed 'platform' as required from schema as it isn't required for a rootproject
+- Fixed project relative path regex
