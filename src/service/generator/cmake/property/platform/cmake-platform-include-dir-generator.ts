@@ -1,12 +1,12 @@
-import { Project } from "../../../../../model/project/project";
+import { Platform } from "../../../../../model/project/platform/platform";
 import { RegexConstants } from "../../../../../util/regex-constants";
-import { PropertyGenerator } from "../../../property/property-generator";
 import { CMakeGeneratorHelper } from "../../cmake-generator-helper";
 import { CMakeVariable } from "../../cmake-variable";
+import { PlatformPropertyGenerator } from "./cmake-platform-property-generator";
 
-export class CMakeProjectIncludeDirGenerator extends PropertyGenerator<Project>
+export class CMakePlatformIncludeDirGenerator extends PlatformPropertyGenerator
 {
-	generate(_project: Project, _fileContent: string[]): void {
+	generate(_project: Platform, _fileContent: string[]): void {
 
 		if(!_project.includeDirectories || _project.includeDirectories.length == 0)
 		{
@@ -15,7 +15,7 @@ export class CMakeProjectIncludeDirGenerator extends PropertyGenerator<Project>
 
 		_fileContent.push('# Global include directories')
 
-		const directoryListVarName = CMakeGeneratorHelper.formatVarString(_project.name, CMakeVariable.INCLUDE_DIR_LIST);
+		const directoryListVarName = CMakeGeneratorHelper.formatVarString(this.project.name, CMakeVariable.INCLUDE_DIR_LIST);
 
 		const relativeDirectoryRegex = new RegExp(RegexConstants.relativeDirectoryRegex);
 

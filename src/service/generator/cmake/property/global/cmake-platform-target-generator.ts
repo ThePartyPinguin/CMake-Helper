@@ -46,7 +46,7 @@ export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 			const platform: Platform = _value.platform[platformType];
 
 			_fileContent.push(`if(${platformType.toUpperCase()})`);
-			_fileContent.push(`\tmessage("Buidling for: ${platformType.toUpperCase()}")`);
+			_fileContent.push(`\tmessage("Buidling ${_value.name} on ${platformType.toUpperCase()}")`);
 
 
 			const sourceVarName = CMakeGeneratorHelper.formatVarString(this._varSafeUid, CMakeVariable.PROJECT_SOURCE_FILES);
@@ -55,7 +55,7 @@ export class CMakePlatformTargetGenerator extends PropertyGenerator<Project>
 			{
 				targetTypeAddition = this._getTargetPlatformSubSystem(platformType);
 			}
-			_fileContent.push(`\t${targetLinePrefix}("${_value.name}" ${targetTypeAddition}\${${sourceVarName}})`);
+			_fileContent.push(`\t${targetLinePrefix}("${_value.name}" ${targetTypeAddition}"\${${sourceVarName}}")`);
 
 			_fileContent.push('\t# Set binary name');
 			_fileContent.push(`\tset_target_properties("${_value.name}" PROPERTIES OUTPUT_NAME "${platform.binary.name}")`);

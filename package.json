@@ -2,7 +2,7 @@
 	"name": "cmake-helper",
 	"displayName": "cmake Helper",
 	"description": "An extension to help manage your cmake projects",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "CMakeHelper",
 	"repository": {
 		"url": "https://github.com/ThePartyPinguin/CMakeHelper"

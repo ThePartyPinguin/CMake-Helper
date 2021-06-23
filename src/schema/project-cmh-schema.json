@@ -146,7 +146,7 @@
 			"type": "array",
 			"items": {
 				"type": "string",
-				"pattern": "^[\\w_]+$"
+				"pattern": "^[\\w_=]+$"
 			},
 			"uniqueItems": true
 		},
@@ -175,7 +175,7 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"pattern": "^[\\w_]+$"
+								"pattern": "^[\\w_=]+$"
 							},
 							"uniqueItems": true
 						},
@@ -273,7 +273,7 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"pattern": "^[\\w_]+$"
+								"pattern": "^[\\w_=]+$$"
 							},
 							"uniqueItems": true
 						},
@@ -371,7 +371,7 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"pattern": "^[\\w_]+$"
+								"pattern": "^[\\w_=]+$"
 							},
 							"uniqueItems": true
 						},
